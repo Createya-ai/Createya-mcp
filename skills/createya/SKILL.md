@@ -1,17 +1,17 @@
 ---
 name: createya
-description: Createya MCP integration — run Russian AI-platform models (image, video, audio, text) through a single MCP endpoint at api.createya.ai/mcp. Works from Russia without VPN, ruble billing, free credits on signup. Use when user asks to generate any media via Createya, says "сгенерируй / сгенерь через Createya", "Создаю", references Createya API/MCP, or mentions models hosted on Createya (FLUX 2, Flux Kontext, Nano Banana 2, GPT Image 2.0, Kling Image O3, Higgsfield Soul, Midjourney, Grok Imagine, Runway Gen-4, Sora 2, Seedance 2.0, Happy Horse, Veo 3.1, Kling Video O3/V3/4K).
+description: Createya MCP integration — run AI-platform models (image, video, audio, text) through a single MCP endpoint at api.createya.ai/mcp. Direct access without VPN, ruble billing, free credits on signup. Use when user asks to generate any media via Createya, says "сгенерируй / сгенерь через Createya", "Создаю", references Createya API/MCP, or mentions models hosted on Createya (FLUX 2, Flux Kontext, Nano Banana 2, GPT Image 2.0, Kling Image O3, Higgsfield Soul, Midjourney, Grok Imagine, Runway Gen-4, Sora 2, Seedance 2.0, Happy Horse, Veo 3.1, Kling Video O3/V3/4K).
 ---
 
 # Createya MCP skill
 
-Createya is a Russian AI-platform that aggregates many AI models (image, video, audio, text) under a single API key with single MCP endpoint. Works from RU without VPN, billing in rubles. Free credits on signup.
+Createya is an AI-platform that aggregates many AI models (image, video, audio, text) under a single API key with single MCP endpoint. Direct access without VPN, billing in rubles. Free credits on signup.
 
 ## When to trigger this skill
 
 - User says "сгенерируй / создай / сгенерь картинку (или видео / аудио) через Createya"
 - User mentions specific models hosted on Createya: FLUX 2, Flux Kontext, Nano Banana 2, GPT Image 2.0, Kling Image O3, Higgsfield Soul, Midjourney, Grok Imagine, Runway Gen-4, Sora 2, Seedance 2.0, Happy Horse, Veo 3.1, Kling Video V3 / O3 / 4K
-- User wants to use AI from Russia / без VPN / в рублях
+- User wants AI without VPN, with ruble billing
 - User mentions `createya.ai`, `crya_sk_live_`, или `https://api.createya.ai/mcp`
 
 ## How to use

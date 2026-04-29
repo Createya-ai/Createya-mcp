@@ -2,7 +2,7 @@
   "$schema": "https://anthropic.com/claude-code/plugin-manifest.schema.json",
   "name": "createya-mcp",
   "version": "1.0.0",
-  "description": "Createya MCP — 100+ AI-моделей (Flux, Kling, Runway, Suno, GPT, Claude) через один MCP-сервер из России. Без VPN. Оплата в рублях. 100 кредитов бесплатно.",
+  "description": "Createya MCP — 100+ AI-моделей (Flux, Kling, Runway, Sora, Veo, Suno, GPT, Claude) через один MCP-сервер. Без VPN. Оплата в рублях. 100 кредитов бесплатно.",
   "author": {
     "name": "Createya",
     "url": "https://createya.ai",
@@ -30,10 +30,10 @@
     "suno",
     "midjourney",
     "elevenlabs",
-    "russia",
-    "russian",
-    "rubles",
-    "no-vpn"
+    "sora",
+    "veo",
+    "ai-platform",
+    "ruble-billing"
   ],
   "skills": [
     {

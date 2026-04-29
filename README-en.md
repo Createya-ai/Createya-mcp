@@ -2,31 +2,31 @@
 
 **Slogan (RU):** Мир нейросетей без границ.
 
-100+ AI models from Russia. No VPN. Ruble billing.
+100+ AI models. No VPN. Ruble billing.
 
-> **English keywords for discovery:** AI image generation, AI video generation, Flux 2, Flux Kontext, Kling Video O3, Runway Gen-4, Sora 2, Veo 3.1, Suno, Midjourney, Nano Banana 2, Higgsfield Soul, Seedance 2.0, Happy Horse, Grok Imagine, GPT Image 2.0, Recraft, Ideogram, ElevenLabs, MCP server, Claude MCP, Cursor MCP, Cline MCP, Windsurf MCP, Codex MCP, OpenCode MCP, Russia AI, ruble payment, no VPN AI, RU AI platform, 152-FZ compliant.
+> **English keywords for discovery:** AI image generation, AI video generation, Flux 2, Flux Kontext, Kling Video O3, Runway Gen-4, Sora 2, Veo 3.1, Suno, Midjourney, Nano Banana 2, Higgsfield Soul, Seedance 2.0, Happy Horse, Grok Imagine, GPT Image 2.0, Recraft, Ideogram, ElevenLabs, MCP server, Claude MCP, Cursor MCP, Cline MCP, Windsurf MCP, Codex MCP, OpenCode MCP, ruble payment, no VPN AI, 152-FZ compliant.
 
-**Russian primary documentation: [README.md](README.md)** — this is the authoritative version.
+**Primary documentation in Russian: [README.md](README.md)** — this is the authoritative version.
 
 ---
 
 ## What is Createya MCP
 
-Createya is a Russian AI-platform aggregating 100+ models (image, video, audio, text) under a single API key. This repository provides:
+Createya is an AI-platform aggregating 100+ models (image, video, audio, text) under a single API key. This repository provides:
 
 - 📦 **Plug-and-play configs** for Claude Desktop, Claude Code, Cursor, Cline, Windsurf, Codex, OpenCode
 - 🎨 **Skill manifest** for Claude Code (auto-discoverable)
-- 📚 **Examples** of image / video / pipeline / Telegram-bot integration
+- 📚 **Examples** of image / video / REST integration
 - 🔌 **MCP endpoint:** `https://api.createya.ai/mcp` (Streamable HTTP, MCP spec 2025-06-18)
 
 ## Why use Createya
 
 | Problem | Solution |
 |---|---|
-| OpenAI / Anthropic / Replicate blocked in Russia | Yandex Cloud servers, no VPN needed |
-| Cannot pay with RU cards | Ruble billing via Tochka (cards / SBP / T-Pay) |
+| Geo-blocked AI services that need VPN | Direct access — no VPN required |
+| Cannot pay with international cards | Ruble billing via local payment systems |
 | Many providers, many keys | Single API key for 100+ models |
-| 152-FZ data residency | All data stored in RU (Yandex Cloud), full compliance |
+| 152-FZ data residency | All data stored locally, full compliance |
 | B2B / legal entities | Bank transfer billing, contract + closing documents, VAT options |
 
 ## Quick start
@@ -45,9 +45,9 @@ Createya is a Russian AI-platform aggregating 100+ models (image, video, audio, 
 
 ## Pricing
 
-- 1 credit ≈ 1 RUB (≈ $0.011 at current rates)
-- 100 credits free on signup
-- Top-ups from 490 RUB (550 credits) up to 4990 RUB (6500 credits with -30% bonus)
+- 100 free credits on signup
+- Top-up plans available at [createya.ai](https://createya.ai)
+- B2B: bank transfer, VAT options, white-label — contact support@createya.ai
 
 ## Documentation
 
@@ -60,7 +60,3 @@ Createya is a Russian AI-platform aggregating 100+ models (image, video, audio, 
 ## License
 
 [MIT](LICENSE) — fork it, build on top of it, no restrictions.
-
----
-
-Made in Russia 🇷🇺 for AI agents worldwide.
