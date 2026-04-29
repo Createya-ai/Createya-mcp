@@ -11,7 +11,7 @@
 [![REST](https://img.shields.io/badge/REST-OpenAPI%203.1-3B82F6?style=flat-square)](https://api.createya.ai/v1/openapi.json)
 [![License: MIT](https://img.shields.io/badge/License-MIT-22C55E?style=flat-square)](LICENSE)
 [![No VPN](https://img.shields.io/badge/No%20VPN-required-EF4444?style=flat-square)]()
-[![Models](https://img.shields.io/badge/Models-100%2B-F59E0B?style=flat-square)](https://createya.ai/knowledge)
+[![Models](https://img.shields.io/badge/Models-148%20endpoints-F59E0B?style=flat-square)](docs/models-image.md)
 
 [🚀 Быстрый старт](#-за-60-секунд) · [🤖 MCP](#-что-делает-mcp-сервер) · [📡 REST](#-без-mcp--обычный-rest-api) · [🎨 Модели](#-каталог-моделей) · [⚙️ Подключение](#%EF%B8%8F-подключение-выберите-свой-инструмент) · [🏢 Юрлицам](#-для-юридических-лиц) · [💬 Поддержка](#-связь)
 
@@ -173,19 +173,23 @@ claude mcp add createya "https://api.createya.ai/mcp" \
 
 ## 🎨 Каталог моделей
 
-Сейчас через MCP/REST доступны **image** и **video** модели. Полный каталог с интерактивными примерами — на сайте: [**createya.ai/knowledge**](https://createya.ai/knowledge).
+Сейчас через MCP/REST доступны **image** и **video** модели. **148 endpoint'ов в 32 семействах**. Полный каталог с интерактивными примерами — на сайте: [**createya.ai/knowledge**](https://createya.ai/knowledge).
 
 ### 🖼 [Image-модели — полный список →](docs/models-image.md)
 
-10 опубликованных моделей: **GPT Image 2.0**, **Nano Banana 2**, **FLUX 2**, **Flux Kontext**, **Kling Image O3**, **Higgsfield Soul**, **Midjourney**, **GPT Image**, **Grok Imagine**, **Runway Gen-4** + ещё 7 моделей через API.
+**70 endpoint'ов в 18 семействах**, включая разные версии (Flash / Flex / Max / Pro / Turbo) и режимы (text-to-image / image-to-image).
+
+Главные семейства: **FLUX** (18 версий), **Wan** (8), **Seedream** (6), **Nano Banana** (6), **Ideogram** (5), **GPT Image** (4), **Kling Image** (4), **Topaz** (4 utility), **Imagen** (3), **Runway Gen-4** (2), **Grok Imagine**, **Recraft**, **Higgsfield Soul**, **Midjourney**, **Z-Image**.
 
 ### 🎬 [Video-модели — полный список →](docs/models-video.md)
 
-9 опубликованных моделей: **Sora 2**, **Veo 3.1** / **Veo 3.1 Fast**, **Kling Video O3** / **V3** / **4K**, **Seedance 2.0** / **1.5**, **Happy Horse 1.0** + ещё 7 моделей через API.
+**78 endpoint'ов в 14 семействах**.
 
-Поддерживаемые режимы: `text-to-video`, `image-to-video`, `video-to-video`, `first-last-frame`.
+Главные семейства: **Kling Video** (20 версий — V2.6 / V3 / O3 standard/pro/4K + motion-control), **Veo 3.1** (12), **Minimax/Hailuo 2.3** (11), **Seedance 2.0** (8), **Wan v2.6** (7), **Grok Video** (5), **Sora 2** (4), **Happy Horse** (4), **Runway** (2).
 
-> 💡 Файлы [docs/models-image.md](docs/models-image.md) и [docs/models-video.md](docs/models-video.md) **синхронизируются автоматически раз в неделю** с live-эндпоинтом `GET /v1/models` через [GitHub Action](.github/workflows/sync-models.yml).
+Режимы: `text-to-video`, `image-to-video`, `video-to-video`, `first-last-frame`, `reference-to-video`, `motion-control`, `extend-video`, `lipsync`.
+
+> 💡 Файлы [docs/models-image.md](docs/models-image.md) и [docs/models-video.md](docs/models-video.md) **синхронизируются автоматически раз в неделю** с live-эндпоинтом `GET /v1/models` через [GitHub Action](.github/workflows/sync-models.yml). Здесь снимок на 2026-04-29.
 
 ---
 
