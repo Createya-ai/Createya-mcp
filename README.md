@@ -173,23 +173,26 @@ claude mcp add createya "https://api.createya.ai/mcp" \
 
 ## 🎨 Каталог моделей
 
-Сейчас через MCP/REST доступны **image** и **video** модели. **148 endpoint'ов в 32 семействах**. Полный каталог с интерактивными примерами — на сайте: [**createya.ai/knowledge**](https://createya.ai/knowledge).
+Полная актуальная документация с примерами на curl/Python/Node.js — на отдельном поддомене **[docs.createya.ai/models/](https://docs.createya.ai/models/)** (синхронизируется с live API раз в неделю).
 
-### 🖼 [Image-модели — полный список →](docs/models-image.md)
+### Сейчас публично доступны через MCP/REST (5 endpoints)
 
-**70 endpoint'ов в 18 семействах**, включая разные версии (Flash / Flex / Max / Pro / Turbo) и режимы (text-to-image / image-to-image).
+| Модель | Тип | Slug | Подробнее |
+|---|---|---|---|
+| **Nano Banana 2** | image | `nano-banana-2` | [docs.createya.ai/models/nano-banana-2](https://docs.createya.ai/models/nano-banana-2) |
+| **Nano Banana 2 Edit** | image (i2i) | `nano-banana-2-edit` | [docs.createya.ai/models/nano-banana-2-edit](https://docs.createya.ai/models/nano-banana-2-edit) |
+| **Nano Banana Pro** | image | `nano-banana-pro` | [docs.createya.ai/models/nano-banana-pro](https://docs.createya.ai/models/nano-banana-pro) |
+| **GPT Image 2** | image | `gpt-image-2` | [docs.createya.ai/models/gpt-image-2](https://docs.createya.ai/models/gpt-image-2) |
+| **GPT Image 2 Edit** | image (i2i) | `gpt-image-2-edit` | [docs.createya.ai/models/gpt-image-2-edit](https://docs.createya.ai/models/gpt-image-2-edit) |
 
-Главные семейства: **FLUX** (18 версий), **Wan** (8), **Seedream** (6), **Nano Banana** (6), **Ideogram** (5), **GPT Image** (4), **Kling Image** (4), **Topaz** (4 utility), **Imagen** (3), **Runway Gen-4** (2), **Grok Imagine**, **Recraft**, **Higgsfield Soul**, **Midjourney**, **Z-Image**.
+### Coming soon (140+ endpoints)
 
-### 🎬 [Video-модели — полный список →](docs/models-video.md)
+В работе — открытие публичного доступа к остальным семействам:
+**FLUX 2 / Kontext** · **Sora 2** · **Veo 3.1** / Fast · **Kling Video O3 / V3 / 4K** · **Seedance 2.0** · **Happy Horse** · **Hailuo 2.3** · **Higgsfield Soul** · **Midjourney** · **Runway Gen-4** · **Recraft** · **Ideogram** · **Imagen** · **Wan** · **Grok Imagine** · **Seedream** и др.
 
-**78 endpoint'ов в 14 семействах**.
-
-Главные семейства: **Kling Video** (20 версий — V2.6 / V3 / O3 standard/pro/4K + motion-control), **Veo 3.1** (12), **Minimax/Hailuo 2.3** (11), **Seedance 2.0** (8), **Wan v2.6** (7), **Grok Video** (5), **Sora 2** (4), **Happy Horse** (4), **Runway** (2).
-
-Режимы: `text-to-video`, `image-to-video`, `video-to-video`, `first-last-frame`, `reference-to-video`, `motion-control`, `extend-video`, `lipsync`.
-
-> 💡 Файлы [docs/models-image.md](docs/models-image.md) и [docs/models-video.md](docs/models-video.md) **синхронизируются автоматически раз в неделю** с live-эндпоинтом `GET /v1/models` через [GitHub Action](.github/workflows/sync-models.yml). Здесь снимок на 2026-04-29.
+📚 **Live-каталог** через API: `GET https://api.createya.ai/v1/models` (публичный, без auth)
+📖 **Маркетинговый обзор** моделей: [createya.ai/knowledge](https://createya.ai/knowledge)
+📡 **Документация API** + per-model страницы: [docs.createya.ai](https://docs.createya.ai)
 
 ---
 
