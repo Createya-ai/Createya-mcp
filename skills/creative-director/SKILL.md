@@ -42,7 +42,12 @@ description: AI креативный директор для генерации 
 
 **Шаг 2 — Точечные вопросы.** Задавай только то чего реально не хватает. Максимум 2-3 вопроса за раз, не анкета. Примеры хороших вопросов:
 - "Опиши субъект подробнее — материал, цвет, особенности"
-- "Для какой платформы / формата?" (если влияет на кадрирование)
+- "Для какой платформы?" — **всегда спрашивай**, это определяет aspect ratio:
+  - Instagram feed → 4:5 (1080×1350)
+  - Stories / Reels → 9:16 (1080×1920)
+  - Маркетплейс (Ozon/WB/Amazon) → 1:1 (1000×1000) или 3:4
+  - Editorial / лендинг → 3:4 или 4:3
+  - Если несколько платформ — генерируем в нейтральном 4:5, кропим под остальные
 - "Есть фото этого товара / модели?"
 - "Нужна модель или предметная съёмка?"
 - "Один кадр или серия?"
@@ -262,21 +267,49 @@ pngpaste /tmp/clipboard-intake.png 2>/dev/null && echo "ok" || echo "empty"
 <один абзац — общая сводка по папке для использования в etalon prompt>
 ```
 
+## Выбор модели — спрашивай, не предполагай
+
+**Никогда не выбирай модель молча.** Перед первой генерацией в сессии — предложи выбор.
+
+### Топ модели для фото (2026)
+
+| Модель | Кредиты | Сильные стороны | Когда использовать |
+|---|---|---|---|
+| `gpt-image-2` | **2 cr** | Точное следование промту, отличный edit-режим, консистентность персонажа через image_url | Фотосессии с референсом модели/товара, серии с консистентностью, бюджетные проекты |
+| `nano-banana-2` | **10 cr** | Фотореализм, кожа, детализация одежды, свет | Когда нужно высокое качество без референса, editorial без персонажа |
+| `nano-banana-pro` | **18 cr** | Максимальное качество, сложные сцены | Luxury, hero shots, финальные кадры для печати |
+| `seedance-2-0` | ~60 cr | Image-to-video | UGC-видео от approved still |
+
+**Как спрашивать** (после сбора брифа, перед первой генерацией):
+
+> «Какую модель используем?
+> • **GPT Image 2** — 2 кр/кадр, хорошо держит референс лица и товара
+> • **Nano Banana 2** — 10 кр/кадр, высокий фотореализм
+> • **Nano Banana Pro** — 18 кр/кадр, максимальное качество
+>
+> Для серии из 6 кадров: GPT Image 2 = ~12 кр, Nano Banana 2 = ~60 кр, Pro = ~108 кр.»
+
+Если в `MASTER_CONTEXT.md` прописан дефолт — используй его без вопроса, только сообщи:
+> «Использую [модель] как дефолт из MASTER_CONTEXT. Ок?»
+
+---
+
 ## Decision tree — что делать по запросу юзера
 
-| User goal | Скрипт-формула | Ключевые модели |
+| User goal | Скрипт-формула | Рекомендованные модели |
 |---|---|---|
-| Фотосессия товара (ecommerce каталог) | `prompting/ecommerce-clean.md` | `nano-banana-pro` |
-| Премиум-каталог (luxury) | `prompting/ecommerce-luxury.md` | `flux-2`, `nano-banana-pro` |
-| Fashion editorial | `prompting/fashion-editorial.md` | `nano-banana-pro`, `flux-2`, `midjourney` |
-| Personal brand комплект | `prompting/personal-brand.md` | `nano-banana-pro` |
-| Художественная предметка | `prompting/product-artistic.md` | `flux-2`, `nano-banana-pro` |
-| UGC — товар + блогер | `prompting/ugc-product-selfie.md` + `prompting/ugc-realism.md` | `nano-banana-pro` (still) → `seedance-2-0`/`veo3.1` (video) |
+| Фотосессия с референсом (модель/товар) | `prompting/fashion-editorial.md` | `gpt-image-2` (edit) или `nano-banana-2` |
+| Фотосессия товара (ecommerce каталог) | `prompting/ecommerce-clean.md` | `gpt-image-2`, `nano-banana-2` |
+| Премиум-каталог (luxury) | `prompting/ecommerce-luxury.md` | `nano-banana-pro`, `nano-banana-2` |
+| Fashion editorial | `prompting/fashion-editorial.md` | `nano-banana-2`, `nano-banana-pro` |
+| Personal brand комплект | `prompting/personal-brand.md` | `gpt-image-2`, `nano-banana-2` |
+| Художественная предметка | `prompting/product-artistic.md` | `nano-banana-pro`, `nano-banana-2` |
+| UGC — товар + блогер | `prompting/ugc-product-selfie.md` + `prompting/ugc-realism.md` | `gpt-image-2` / `nano-banana-2` (still) → `seedance-2-0` (video) |
 | UGC видео-отзыв | `prompting/ugc-video.md` + `prompting/ugc-realism.md` | `seedance-2-0`, `veo3.1`, `sora-2` |
-| Hero shot товара (без человека) | `prompting/product-hero.md` | `flux-2`, `nano-banana-pro` |
-| Воссоздать модель по фото | `prompting/influencer-recreation.md` (two-step!) | `nano-banana-pro` (still) → `veo3.1` (video) |
-| Создать AI-модель из текста | `prompting/character-sheet.md` (9 ракурсов) | `nano-banana-pro` |
-| Lifestyle / cinematic | `prompting/lifestyle-cinematic.md` | `flux-2`, `midjourney` |
+| Hero shot товара (без человека) | `prompting/product-hero.md` | `nano-banana-2`, `nano-banana-pro` |
+| Воссоздать модель по фото | `prompting/influencer-recreation.md` (two-step!) | `gpt-image-2` (still) → `seedance-2-0` / `veo3.1` (video) |
+| Создать AI-модель из текста | `prompting/character-sheet.md` (9 ракурсов) | `nano-banana-2`, `nano-banana-pro` |
+| Lifestyle / cinematic | `prompting/lifestyle-cinematic.md` | `nano-banana-2`, `nano-banana-pro` |
 | Reverse-engineer чужого фото/видео | `prompting/analyze-reference.md` | (planning, не gen) |
 
 Если запрос не подходит ни под одну формулу — действуй по universal principles ниже + комбинируй пресеты.
