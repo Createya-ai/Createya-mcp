@@ -1,0 +1,22 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "createya-ai",
+  "description": "Createya plugins for Claude Code — AI image and video generation via 100+ models",
+  "owner": {
+    "name": "Createya",
+    "email": "support@createya.ai"
+  },
+  "plugins": [
+    {
+      "name": "createya-mcp",
+      "description": "100+ AI models via a single MCP server — FLUX, Kling, Runway, Sora 2, Veo 3.1, Midjourney, Higgsfield, Seedance and more. Includes Creative Director skill for photo shoots, lookbooks, UGC video, e-commerce content, and character sheets.",
+      "author": {
+        "name": "Createya",
+        "url": "https://createya.ai"
+      },
+      "category": "design",
+      "source": "./",
+      "homepage": "https://createya.ai"
+    }
+  ]
+}
