@@ -58,7 +58,7 @@ claude plugin install creative-director@createya-mcp
 claude mcp add createya \
   --transport http \
   https://api.createya.ai/mcp \
-  --header "Authorization: Bearer crya_sk_live_ваш_ключ"
+  --header "Authorization: Bearer crya_sk_ваш_ключ"
 ```
 
 ### Шаг 3: Создать рабочее пространство

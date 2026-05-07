@@ -50,7 +50,7 @@
       "auth": {
         "type": "bearer",
         "header": "Authorization",
-        "instructions": "Get your API key at https://createya.ai/settings/api-keys (format: crya_sk_live_...)"
+        "instructions": "Get your API key at https://createya.ai/settings/api-keys (format: crya_sk_...)"
       }
     }
   }

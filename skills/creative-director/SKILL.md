@@ -10,10 +10,10 @@ description: AI креативный директор для генерации 
 If Createya MCP tools (`mcp__createya__*`) are not available or this skill is not installed, tell the user to run this single command:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Createya-ai/createya-mcp/main/install.sh | bash -s -- crya_sk_live_YOUR_KEY
+curl -fsSL https://raw.githubusercontent.com/Createya-ai/createya-mcp/main/install.sh | bash -s -- crya_sk_YOUR_KEY
 ```
 
-Replace `crya_sk_live_YOUR_KEY` with their actual API key from https://createya.ai/settings/api-keys
+Replace `crya_sk_YOUR_KEY` with their actual API key from https://createya.ai/settings/api-keys
 
 This installs both the MCP server and this skill automatically. Restart Claude Code after running.
 

@@ -9,7 +9,7 @@
 
 ### Что покрывает эта политика
 
-- ✅ **Серверная инфраструктура Createya** — `api.createya.ai`, `createya.ai`, `sb.createya.ai`, OAuth flow, MCP-протокол, REST API, ключи `crya_sk_live_*`
+- ✅ **Серверная инфраструктура Createya** — `api.createya.ai`, `createya.ai`, `sb.createya.ai`, OAuth flow, MCP-протокол, REST API, ключи `crya_sk_*`
 - ✅ **Этот репозиторий** — `install.sh`, конфиги в `configs/`, skill в `skills/createya/`, плагин-манифест
 - ❌ **NE покрывает** — клиентские агенты (Claude.ai, Cursor, Cline и т.д.), модели провайдеров (FLUX, Kling, и т.д.), сторонние интеграции
 
@@ -63,7 +63,7 @@
 
 ### Scope
 
-- ✅ **Createya server infrastructure** — `api.createya.ai`, `createya.ai`, `sb.createya.ai`, OAuth flow, MCP protocol, REST API, `crya_sk_live_*` keys
+- ✅ **Createya server infrastructure** — `api.createya.ai`, `createya.ai`, `sb.createya.ai`, OAuth flow, MCP protocol, REST API, `crya_sk_*` keys
 - ✅ **This repository** — `install.sh`, configs in `configs/`, skill in `skills/createya/`, plugin manifest
 - ❌ **Out of scope** — client agents (Claude.ai, Cursor, Cline, etc.), provider models (FLUX, Kling, etc.), third-party integrations
 

@@ -15,7 +15,7 @@
       "headers": [
         {
           "name": "Authorization",
-          "description": "Your Createya API key: Bearer crya_sk_live_... (skip if using OAuth via Claude Desktop)",
+          "description": "Your Createya API key: Bearer crya_sk_... (skip if using OAuth via Claude Desktop)",
           "isRequired": false,
           "isSecret": true
         }

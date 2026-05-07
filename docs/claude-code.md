@@ -67,7 +67,7 @@ claude plugin install creative-director@createya-mcp
 claude mcp add createya \
   --transport http \
   https://api.createya.ai/mcp \
-  --header "Authorization: Bearer crya_sk_live_ваш_ключ"
+  --header "Authorization: Bearer crya_sk_ваш_ключ"
 ```
 
 Проверить что сервер доступен:
@@ -198,7 +198,7 @@ UGC-отзыв на наушники. Девушка 22-25 лет, iPhone selfie
 
 ```bash
 # ~/.zshrc или ~/.bashrc
-export CREATEYA_API_KEY=crya_sk_live_ваш_ключ
+export CREATEYA_API_KEY=crya_sk_ваш_ключ
 ```
 
 ## Проверка установки

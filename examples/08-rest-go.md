@@ -186,7 +186,7 @@ func main() {
 ## Запуск
 
 ```bash
-export CREATEYA_API_KEY=crya_sk_live_...
+export CREATEYA_API_KEY=crya_sk_...
 go run .
 ```
 
