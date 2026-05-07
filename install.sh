@@ -97,7 +97,10 @@ echo ""
 # ── Helper: copy one skill into target dir, idempotent (rm + cp) ─────────────
 install_skill() {
   local skill="$1" target="$2"
-  rm -rf "${target}/${skill}"
+  # SC2115: ${var:?} fails the script if either var is empty/unset, preventing
+  # an accidental `rm -rf "/<skill>"` (would nuke the filesystem) or
+  # `rm -rf "<target>/"` (target deleted whole).
+  rm -rf "${target:?}/${skill:?}"
   mkdir -p "${target}"
   cp -R "${TEMP_DIR}/createya-mcp/skills/${skill}" "${target}/"
 }
