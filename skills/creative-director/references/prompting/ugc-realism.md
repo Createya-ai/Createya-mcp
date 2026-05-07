@@ -93,7 +93,7 @@ unposed feel.
 | `ecommerce` luxury | НЕТ |
 | `fashion` editorial | НЕТ — там специально "polished" |
 | `personal_brand` corporate | НЕТ |
-| `personal_brand` creative/intimate | ЧАСТИЧНО (skin realism да, imperfection — мягко) |
+| `personal_brand` createya/intimate | ЧАСТИЧНО (skin realism да, imperfection — мягко) |
 | `portfolio` | НЕТ |
 | `product_artistic` | НЕТ (если стиль не lifestyle) |
 | `product_artistic` lifestyle | ДА |

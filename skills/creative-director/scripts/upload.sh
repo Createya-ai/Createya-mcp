@@ -9,7 +9,7 @@
 #   url=$(./scripts/upload.sh /tmp/photo.jpg "products/yellow-hoodie")
 #   echo $url  # → https://cdn-new.createya.ai/temp/<uid>/products/yellow-hoodie/<...>.jpg
 #
-# Does NOT update creative/.assets-index.json — that's sync.sh's job.
+# Does NOT update createya/.assets-index.json — that's sync.sh's job.
 # Use this for ad-hoc uploads (e.g. attached file Claude Code drag-dropped).
 
 set -euo pipefail

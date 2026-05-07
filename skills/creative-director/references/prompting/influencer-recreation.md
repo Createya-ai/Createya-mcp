@@ -106,7 +106,7 @@ Still → `start_frame_image_url` для video модели.
 ## Сохранение
 
 ```
-creative/assets/models/<person-slug>/
+createya/characters/<person-slug>/
 ├── _ref-hero.jpg        ← оригинальный референс юзера
 ├── _ref-secondary.jpg   ← если был
 ├── _vision.md

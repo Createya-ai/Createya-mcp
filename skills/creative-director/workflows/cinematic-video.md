@@ -68,7 +68,7 @@ Mood: [from still — cinematic / candid / commercial].
 
 ### Шаг 5 — Download и QA
 
-После completion — `bash ./scripts/download.sh <video_url>` → файл в `creative/sessions/<slug>/results/shot-NN.mp4`.
+После completion — `bash ./scripts/download.sh <video_url>` → файл в `createya/sessions/<slug>/results/shot-NN.mp4`.
 
 QA визуально (через `bash open <path>` для preview):
 - Идентичность субъекта сохранена

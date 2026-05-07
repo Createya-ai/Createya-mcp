@@ -73,7 +73,7 @@ bash ~/.claude/plugins/creative-director/scripts/setup.sh
 
 Это главное преимущество Desktop перед CLI:
 
-1. Открой проект с папкой `creative/assets/`
+1. Открой проект с папкой `createya/assets/`
 2. Перетащи фото прямо в prompt поле
 3. Напиши задачу — агент автоматически вызовет `Read` на изображение
 

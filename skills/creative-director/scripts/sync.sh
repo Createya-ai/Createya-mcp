@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
-# Sync local creative/assets/ → Createya S3 (ephemeral, 24h auto-delete).
+# Sync local createya/assets/ → Createya S3 (ephemeral, 24h auto-delete).
 #
-# Compares local files with creative/.assets-index.json:
+# Compares local files with createya/.assets-index.json:
 #   - new file → upload (request presigned URL → curl PUT → record cdn_url)
 #   - changed file (sha256 differs) → re-upload
 #   - file already uploaded with valid will_delete_at > now+1h → skip
 #   - file expiring within 1h → re-upload (refresh)
 #
 # Usage:
-#   ./scripts/sync.sh                  # sync all of creative/assets/
+#   ./scripts/sync.sh                  # sync all of createya/assets/
 #   ./scripts/sync.sh models/sarah     # sync only one subfolder
 #
 # Requires: curl, jq, sha256sum (or shasum on macOS).
@@ -16,8 +16,8 @@
 set -euo pipefail
 
 PROJECT_ROOT="$(pwd)"
-[[ -d "$PROJECT_ROOT/creative/assets" ]] || {
-  echo "✗ Not a Creative Director workspace (no creative/assets/). Run ./scripts/setup.sh first."
+[[ -d "$PROJECT_ROOT/createya/assets" ]] || {
+  echo "✗ Not a Creative Director workspace (no createya/assets/). Run ./scripts/setup.sh first."
   exit 1
 }
 
@@ -28,7 +28,7 @@ fi
 : "${CREATEYA_API_KEY:?CREATEYA_API_KEY is not set in .env}"
 BASE="${CREATEYA_API_BASE:-https://api.createya.ai}"
 
-INDEX_FILE="$PROJECT_ROOT/creative/.assets-index.json"
+INDEX_FILE="$PROJECT_ROOT/createya/.assets-index.json"
 [[ -f "$INDEX_FILE" ]] || echo '{}' > "$INDEX_FILE"
 
 # Cross-platform sha256
@@ -86,7 +86,7 @@ needs_refresh() {
 
 # Subfolder filter
 SUBFILTER="${1:-}"
-ASSETS_ROOT="$PROJECT_ROOT/creative/assets"
+ASSETS_ROOT="$PROJECT_ROOT/createya/assets"
 SCAN_PATH="$ASSETS_ROOT"
 [[ -n "$SUBFILTER" ]] && SCAN_PATH="$ASSETS_ROOT/$SUBFILTER"
 [[ -d "$SCAN_PATH" ]] || { echo "✗ No such folder: $SCAN_PATH"; exit 1; }

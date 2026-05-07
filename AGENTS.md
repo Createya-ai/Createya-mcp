@@ -3,7 +3,11 @@
 ## What this repo is
 
 - **MCP server** at `https://api.createya.ai/mcp` — 100+ AI generation models (FLUX, Kling, Runway, Sora 2, Veo 3.1, Midjourney, Higgsfield, Seedance, Nano Banana and more)
-- **Skills** in `skills/` — `createya` (base MCP integration) and `creative-director` (AI creative director for photo shoots, lookbooks, UGC, character sheets)
+- **Skills** in `skills/`:
+  - `createya` — base MCP integration (model catalogue, run, balance)
+  - `creative-director` — AI creative director for photo shoots, lookbooks, UGC, editorial series
+  - `character-sheet` — generate persistent character reference sheets via GPT Image 2 (6 close-ups + tall full-body), saved into `createya/characters/<slug>/` for reuse across photo and video generations
+- **Local workspace** is created per-project in `<cwd>/createya/` (assets, sessions, characters) — never on Desktop or in `~`. Run `~/.claude/skills/creative-director/scripts/setup.sh` once inside the project root to scaffold it.
 
 ---
 

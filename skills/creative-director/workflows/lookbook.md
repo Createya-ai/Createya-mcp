@@ -38,7 +38,7 @@
 
 ### Шаг 2 — Approval юзера
 
-Открыть результат через `bash open creative/sessions/<slug>/results/etalon.jpg` → дождаться ответа.
+Открыть результат через `bash open createya/sessions/<slug>/results/etalon.jpg` → дождаться ответа.
 
 **Без approval не двигаемся.** Если юзер хочет правки — итерируем эталон, не идём к outfits.
 
