@@ -16,7 +16,7 @@ import time
 import requests
 
 BASE = "https://api.createya.ai/v1"
-KEY = os.environ["CREATEYA_API_KEY"]   # crya_sk_live_...
+KEY = os.environ["CREATEYA_API_KEY"]   # crya_sk_...
 
 def headers():
     return {"Authorization": f"Bearer {KEY}", "Content-Type": "application/json"}

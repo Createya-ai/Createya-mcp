@@ -14,7 +14,7 @@ Createya is an AI-platform that aggregates many AI image and video generation mo
 - User says "сгенерируй / создай / сгенерь картинку или видео через Createya"
 - User mentions specific models hosted on Createya: FLUX 2, Flux Kontext, Nano Banana 2, GPT Image 2.0, Kling Image O3, Higgsfield Soul, Midjourney, Grok Imagine, Runway Gen-4, Sora 2, Seedance 2.0, Happy Horse, Veo 3.1, Kling Video V3 / O3 / 4K
 - User wants AI without VPN, with ruble billing
-- User mentions `createya.ai`, `crya_sk_live_`, или `https://api.createya.ai/mcp`
+- User mentions `createya.ai`, `crya_sk_`, или `https://api.createya.ai/mcp`
 
 ## How to use
 
@@ -24,7 +24,7 @@ If `createya:list_models` tool is available — proceed. If not — point user t
 
 ```
 1. Register at https://createya.ai (free credits on signup)
-2. Create API key at https://createya.ai/settings/api-keys (must start with crya_sk_live_)
+2. Create API key at https://createya.ai/settings/api-keys (must start with crya_sk_)
 3. Add MCP to your client (see configs/ folder in this repo)
 ```
 
@@ -97,7 +97,7 @@ Based on Createya's published knowledge base — full catalog at https://createy
 
 ## Common issues
 
-- **401 Unauthorized** → ключ невалиден / истёк / не `crya_sk_live_*` префикс
+- **401 Unauthorized** → ключ невалиден / истёк / не `crya_sk_*` префикс
 - **402 Insufficient credits** → пополнить на https://createya.ai
 - **404 Model not found** → проверь slug через `list_models`
 - **422 Invalid input** → проверь `parameters_schema` модели через `list_models`

@@ -9,7 +9,7 @@
 
 Все запросы требуют API ключ:
 ```
-Authorization: Bearer crya_sk_live_<32hex>
+Authorization: Bearer crya_sk_<32hex>
 ```
 
 Ключи привязаны к workspace — кредиты списываются с `workspaces.credits_balance`.

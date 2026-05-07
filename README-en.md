@@ -51,22 +51,32 @@ All through **MCP** (for agents) or plain **REST** (for your code).
 **1. Sign up → get 100 free credits**
 [createya.ai](https://createya.ai)
 
-**2. Create API key** (format `crya_sk_live_<32hex>`)
+**2. Create API key** (format `crya_sk_<32hex>`)
 [createya.ai/settings/api-keys](https://createya.ai/settings/api-keys)
 
 **3. Pick your path:**
 
-### 🤖 Building an AI agent → MCP
+### 🤖 Building an AI agent → one-line install
+```bash
+curl -fsSL https://api.createya.ai/install | bash -s -- crya_sk_YOUR_KEY
 ```
-Connect https://api.createya.ai/mcp to Claude / Cursor / Cline / Windsurf
-In chat: "Generate an image via Createya — cat on the moon"
+
+Auto-detects your agent: Claude Code (`~/.claude/skills/`), opencode (reads the same), Codex CLI / Cursor / OpenClaw (universal `~/.agents/skills/` per [agentskills.io](https://agentskills.io) standard). All skills from this repo are installed automatically — drop a new one and it shows up on the next install.
+
+```bash
+# List available skills:
+curl -fsSL https://api.createya.ai/install | bash -s -- --list
+
+# Install only specific ones:
+curl -fsSL https://api.createya.ai/install | bash -s -- crya_sk_KEY --skills creative-director
 ```
+
 [→ Setup instructions for all clients](#%EF%B8%8F-setup--pick-your-tool)
 
 ### 💻 Writing your own code → REST
 ```bash
 curl -X POST https://api.createya.ai/v1/run \
-  -H "Authorization: Bearer crya_sk_live_..." \
+  -H "Authorization: Bearer crya_sk_..." \
   -H "Content-Type: application/json" \
   -d '{"model":"nano-banana-2","input":{"prompt":"cat on the moon"}}'
 ```
@@ -100,7 +110,7 @@ Once connected, your agent gets **4 tools**:
 1. **Claude.ai** → [Settings → Connectors](https://claude.ai/settings/connectors) → **Add custom connector**
    **Claude Desktop** → `+` menu → `Connectors` → `Add custom connector`
 2. Server URL: `https://api.createya.ai/mcp`
-3. Claude opens Createya authorization page — paste your `crya_sk_live_...` key → **Allow**
+3. Claude opens Createya authorization page — paste your `crya_sk_...` key → **Allow**
 4. Done. Tools (`list_models`, `run_model`, ...) appear in chat.
 
 > 💡 Each team member gets their own key. Credits charged from the workspace the key belongs to.
@@ -110,7 +120,7 @@ Once connected, your agent gets **4 tools**:
 ```bash
 claude mcp add createya "https://api.createya.ai/mcp" \
   --transport http \
-  --header "Authorization: Bearer crya_sk_live_..."
+  --header "Authorization: Bearer crya_sk_..."
 ```
 
 > ⚠ Header value uses `:` (colon + space), **not** `=`. Most common mistake.
@@ -124,7 +134,7 @@ claude mcp add createya "https://api.createya.ai/mcp" \
     "createya": {
       "url": "https://api.createya.ai/mcp",
       "headers": {
-        "Authorization": "Bearer crya_sk_live_..."
+        "Authorization": "Bearer crya_sk_..."
       }
     }
   }
@@ -140,7 +150,7 @@ In `settings.json`:
     "createya": {
       "type": "streamableHttp",
       "url": "https://api.createya.ai/mcp",
-      "headers": { "Authorization": "Bearer crya_sk_live_..." },
+      "headers": { "Authorization": "Bearer crya_sk_..." },
       "disabled": false
     }
   }
@@ -156,7 +166,7 @@ In `settings.json`:
   "mcpServers": {
     "createya": {
       "serverUrl": "https://api.createya.ai/mcp",
-      "headers": { "Authorization": "Bearer crya_sk_live_..." }
+      "headers": { "Authorization": "Bearer crya_sk_..." }
     }
   }
 }
@@ -168,7 +178,7 @@ See [`configs/codex.toml`](configs/codex.toml) and [`configs/opencode.json`](con
 
 ### G. Any other MCP client
 
-Ready-made configs in [`configs/`](configs/). Copy the relevant one, replace `crya_sk_live_...` with your key — done.
+Ready-made configs in [`configs/`](configs/). Copy the relevant one, replace `crya_sk_...` with your key — done.
 
 ---
 
@@ -242,14 +252,14 @@ If you're not building an agent, just a developer — use the REST API. One Bear
 1. Sign up at [createya.ai](https://createya.ai) (you get 100 free credits)
 2. Go to [createya.ai/settings/api-keys](https://createya.ai/settings/api-keys)
 3. **Create new key** → name it (e.g. `my-bot-prod`) → **Create**
-4. **Copy the key** — shown **once**. Format: `crya_sk_live_<32hex>`
+4. **Copy the key** — shown **once**. Format: `crya_sk_<32hex>`
 5. Store as a password (env var, secret manager, never git)
 
 ### Step 2 — first request
 
 ```bash
 curl -X POST https://api.createya.ai/v1/run \
-  -H "Authorization: Bearer crya_sk_live_..." \
+  -H "Authorization: Bearer crya_sk_..." \
   -H "Content-Type: application/json" \
   -d '{
     "model": "nano-banana-2",
@@ -320,14 +330,14 @@ resp, _ := http.DefaultClient.Do(req)
 ```bash
 # Step 1 — submit
 curl -X POST https://api.createya.ai/v1/run \
-  -H "Authorization: Bearer crya_sk_live_..." \
+  -H "Authorization: Bearer crya_sk_..." \
   -H "Content-Type: application/json" \
   -d '{"model":"kling-video-o3","input":{"image_url":"https://...","duration":5}}'
 # → 202 Accepted, { "run_id": "run_01J2...", "status": "queued" }
 
 # Step 2 — poll every 10 sec
 curl https://api.createya.ai/v1/runs/run_01J2... \
-  -H "Authorization: Bearer crya_sk_live_..."
+  -H "Authorization: Bearer crya_sk_..."
 # → { "status": "completed", "output": { "url": "https://cdn-new.createya.ai/video/..." } }
 ```
 
@@ -368,7 +378,7 @@ Createya works with companies via contracts and bank transfers.
 
 ## 🔐 Security
 
-- **API keys** — format `crya_sk_live_<32hex>`, stored hashed (bcrypt)
+- **API keys** — format `crya_sk_<32hex>`, stored hashed (bcrypt)
 - **Workspace isolation** — key bound to a single workspace, can't charge another
 - **OAuth 2.1 + PKCE** — for web clients (Claude.ai)
 - **Rate limits** — at the key level, leak protection

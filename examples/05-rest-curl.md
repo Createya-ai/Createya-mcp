@@ -6,9 +6,9 @@
 
 1. Зарегистрируйся на [createya.ai](https://createya.ai) → 100 бесплатных кредитов
 2. [createya.ai/settings/api-keys](https://createya.ai/settings/api-keys) → **Create new key** → скопируй
-3. Формат: `crya_sk_live_<32hex>`. Сохрани в env var:
+3. Формат: `crya_sk_<32hex>`. Сохрани в env var:
    ```bash
-   export CREATEYA_API_KEY="crya_sk_live_..."
+   export CREATEYA_API_KEY="crya_sk_..."
    ```
 
 ## 2. Простая sync-генерация (картинка)
@@ -124,7 +124,7 @@ curl https://api.createya.ai/v1/balance \
 | `200` | OK | Работает |
 | `202` | Accepted (async задача создана) | Polling через `/v1/runs/{id}` |
 | `400` | Bad request | Проверь body — возможно неверный JSON |
-| `401` | Unauthorized | Ключ невалиден / истёк / не `crya_sk_live_*` |
+| `401` | Unauthorized | Ключ невалиден / истёк / не `crya_sk_*` |
 | `402` | Insufficient credits | Пополни на [createya.ai](https://createya.ai) |
 | `404` | Model not found | Проверь slug через `/v1/models` |
 | `422` | Invalid input | Проверь `parameters_schema` модели |

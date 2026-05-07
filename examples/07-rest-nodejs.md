@@ -6,7 +6,7 @@
 
 ```typescript
 const BASE = "https://api.createya.ai/v1";
-const KEY = process.env.CREATEYA_API_KEY!;   // crya_sk_live_...
+const KEY = process.env.CREATEYA_API_KEY!;   // crya_sk_...
 
 function headers(extra: Record<string, string> = {}): Record<string, string> {
   return { "Authorization": `Bearer ${KEY}`, "Content-Type": "application/json", ...extra };

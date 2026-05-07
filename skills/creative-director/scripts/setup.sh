@@ -40,7 +40,7 @@ fi
 if [[ ! -f "$PROJECT_ROOT/.env" ]]; then
   cat > "$PROJECT_ROOT/.env" <<EOF
 # Createya API key (https://createya.ai/settings/api-keys)
-# Format: crya_sk_live_<32hex>
+# Format: crya_sk_<32hex>
 CREATEYA_API_KEY=
 
 # Optional: override gateway URL (defaults to PROD)
@@ -63,7 +63,7 @@ if ! grep -q "^CREATEYA_API_KEY=crya_sk" "$PROJECT_ROOT/.env"; then
 
     if [[ -n "$api_key" ]]; then
       if [[ ! "$api_key" =~ ^crya_sk_(live|test)_[a-f0-9]{32}$ ]]; then
-        echo "⚠ Key format looks unusual (expected crya_sk_live_<32hex>). Saving anyway."
+        echo "⚠ Key format looks unusual (expected crya_sk_<32hex>). Saving anyway."
       fi
       # Use sed with delimiter | to avoid issues with key chars.
       sed "s|^CREATEYA_API_KEY=.*|CREATEYA_API_KEY=$api_key|" "$PROJECT_ROOT/.env" > "$PROJECT_ROOT/.env.tmp"

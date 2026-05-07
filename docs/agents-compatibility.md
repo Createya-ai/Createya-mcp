@@ -22,7 +22,7 @@
 ## Установка MCP (одна команда для всех)
 
 ```bash
-curl -fsSL https://api.createya.ai/install-mcp | bash -s -- crya_sk_live_ваш_ключ
+curl -fsSL https://api.createya.ai/install-mcp | bash -s -- crya_sk_ваш_ключ
 ```
 
 Скрипт автоматически определит установленные агенты и пропишет MCP config.
@@ -42,7 +42,7 @@ claude plugin install creative-director@createya-mcp
 
 # MCP
 claude mcp add createya --transport http https://api.createya.ai/mcp \
-  --header "Authorization: Bearer crya_sk_live_..."
+  --header "Authorization: Bearer crya_sk_..."
 ```
 
 Подробно: [docs/claude-code.md](claude-code.md) | [docs/claude-desktop.md](claude-desktop.md)
@@ -64,7 +64,7 @@ openclaw onboard --install-daemon
 openclaw plugins install git+https://github.com/Createya-ai/createya-mcp
 
 # Настроить API ключ
-openclaw config set env.CREATEYA_API_KEY crya_sk_live_ваш_ключ
+openclaw config set env.CREATEYA_API_KEY crya_sk_ваш_ключ
 
 # Перезапустить
 openclaw gateway restart
@@ -73,7 +73,7 @@ openclaw gateway restart
 ### Структура skill в workspace
 
 ```
-~/.openclaw/workspace/skills/creative-director/
+~/.openclaw/skills/creative-director/
 ├── SKILL.md              # основные инструкции (REST fallback включён)
 ├── references/           # пресеты, гайды
 ├── scripts/
@@ -125,7 +125,7 @@ curl -fsSL https://raw.githubusercontent.com/Createya-ai/createya-mcp/main/confi
     "createya": {
       "url": "https://api.createya.ai/mcp",
       "type": "streamable-http",
-      "headers": { "Authorization": "Bearer crya_sk_live_..." }
+      "headers": { "Authorization": "Bearer crya_sk_..." }
     }
   }
 }
@@ -147,7 +147,7 @@ code --install-extension saoudrizwan.claude-dev
 {
   "createya": {
     "url": "https://api.createya.ai/mcp",
-    "headers": { "Authorization": "Bearer crya_sk_live_..." }
+    "headers": { "Authorization": "Bearer crya_sk_..." }
   }
 }
 ```
@@ -166,7 +166,7 @@ code --install-extension saoudrizwan.claude-dev
   "mcpServers": {
     "createya": {
       "url": "https://api.createya.ai/mcp",
-      "headers": { "Authorization": "Bearer crya_sk_live_..." }
+      "headers": { "Authorization": "Bearer crya_sk_..." }
     }
   }
 }
@@ -193,7 +193,7 @@ mcpServers:
   - name: createya
     url: https://api.createya.ai/mcp
     headers:
-      Authorization: "Bearer crya_sk_live_..."
+      Authorization: "Bearer crya_sk_..."
 ```
 
 ---
@@ -210,7 +210,7 @@ npm install -g @google-labs/gemini-cli
   "mcpServers": {
     "createya": {
       "httpUrl": "https://api.createya.ai/mcp",
-      "headers": { "Authorization": "Bearer crya_sk_live_..." }
+      "headers": { "Authorization": "Bearer crya_sk_..." }
     }
   }
 }

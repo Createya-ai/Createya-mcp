@@ -62,7 +62,7 @@ Scope'ы: `configs`, `examples`, `install`, `skills`, `readme`, `workflows`.
 #### Новый конфиг (`configs/<client>.json`)
 
 - Префикс `_comment` с **точным путём** где этот конфиг должен лежать в системе пользователя
-- Placeholder `crya_sk_live_REPLACE_WITH_YOUR_KEY` — никогда реальные ключи
+- Placeholder `crya_sk_REPLACE_WITH_YOUR_KEY` — никогда реальные ключи
 - Минимальный конфиг (без лишних полей которые наш сервер не использует)
 
 Пример:
@@ -74,7 +74,7 @@ Scope'ы: `configs`, `examples`, `install`, `skills`, `readme`, `workflows`.
       "type": "http",
       "url": "https://api.createya.ai/mcp",
       "headers": {
-        "Authorization": "Bearer crya_sk_live_REPLACE_WITH_YOUR_KEY"
+        "Authorization": "Bearer crya_sk_REPLACE_WITH_YOUR_KEY"
       }
     }
   }
@@ -97,7 +97,7 @@ Scope'ы: `configs`, `examples`, `install`, `skills`, `readme`, `workflows`.
 Минимум:
 - [ ] JSON-конфиги валидны (`python3 -m json.tool < configs/your.json`)
 - [ ] Markdown-ссылки работают (visual check)
-- [ ] Не закоммитил реальный ключ (`git diff | grep crya_sk_live` должен быть пустой)
+- [ ] Не закоммитил реальный ключ (`git diff | grep crya_sk_` должен быть пустой)
 
 ### 6. Что после PR
 
@@ -105,6 +105,47 @@ Scope'ы: `configs`, `examples`, `install`, `skills`, `readme`, `workflows`.
 - Maintainer (Артур) посмотрит PR в течение 2-3 рабочих дней
 - Если есть вопросы / нужны правки — комментарий в PR
 - Merge через squash → попадает в `main` → автоматически попадает в [GitHub release](https://github.com/Createya-ai/createya-mcp/releases) при следующем теге
+
+## Как добавить новый скилл
+
+Структура `skills/` авто-обнаруживается установщиком — добавить новый скилл = одна директория, никаких правок `install.sh`.
+
+```
+skills/
+  my-new-skill/
+    SKILL.md            ← обязательный файл с YAML frontmatter
+    presets/            ← опционально: пресеты, шаблоны
+    workflows/          ← опционально: пошаговые инструкции
+    references/         ← опционально: справочные таблицы
+    scripts/            ← опционально: утилиты (bash, python)
+```
+
+Минимальный `SKILL.md`:
+
+```markdown
+---
+name: my-new-skill
+description: Краткое описание (≤1024 символа). Обязательно укажи триггер-фразы — что юзер должен сказать чтобы скилл активировался ("создай мокап", "research models", и т.д.). От этого зависит когда агент его подключит.
+---
+
+# My New Skill
+
+Что делает скилл, как использовать. Markdown свободной формы.
+
+## Setup
+
+Если используется MCP, упомяни `mcp__createya__*` тулы.
+Если REST — пример с `crya_sk_<key>`.
+```
+
+Требования к frontmatter ([agentskills.io spec](https://agentskills.io)):
+- `name` — 1–64 символа, lowercase + дефисы (тот же slug что директория).
+- `description` — ≤1024 символа, описывает **когда** активировать скилл (триггер-фразы).
+
+После добавления:
+1. Локально: `bash install.sh --list` должен показать твой скилл.
+2. PR с описанием use-case.
+3. После merge — скилл автоматически попадёт в установщик (`curl install | bash` следующего раза подтянет).
 
 ## Code of Conduct
 

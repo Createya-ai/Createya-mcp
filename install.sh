@@ -1,18 +1,44 @@
 #!/usr/bin/env bash
-# Createya — one-command installer: skills + MCP server
+# Createya — universal installer for skills + MCP server.
+#
+# Detects which AI CLI agents are installed (Claude Code, opencode, Codex,
+# Cursor, OpenClaw) and copies all skills from this repo to the right place
+# for each. Auto-discovers skills/ directory contents — no hardcoded list,
+# add a new skill = drop a directory with SKILL.md and it picks up next run.
 #
 # Usage:
-#   curl -fsSL https://api.createya.ai/install | bash -s -- crya_sk_live_YOUR_KEY
+#   curl -fsSL https://api.createya.ai/install | bash -s -- crya_sk_YOUR_KEY
+#   curl -fsSL https://api.createya.ai/install | bash -s -- --list
+#   curl -fsSL https://api.createya.ai/install | bash -s -- crya_sk_YOUR_KEY --skills creative-director
 #
-# The API key argument is optional — if omitted, MCP is registered without auth
-# (useful when key is already set in env or when using OAuth via Claude Desktop).
+# API key argument is optional (without it, MCP is registered without auth and
+# will fall back to OAuth on first use). Format: crya_sk_<32hex>.
 
 set -euo pipefail
 
-API_KEY="${1:-}"
 REPO_URL="https://github.com/Createya-ai/createya-mcp"
 REPO_TAG="${CREATEYA_MCP_TAG:-main}"
 MCP_URL="https://api.createya.ai/mcp"
+
+# ── Args ─────────────────────────────────────────────────────────────────────
+API_KEY=""
+SKILL_FILTER=""
+LIST_ONLY=false
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --list)   LIST_ONLY=true; shift ;;
+    --skills) SKILL_FILTER="$2"; shift 2 ;;
+    --skills=*) SKILL_FILTER="${1#--skills=}"; shift ;;
+    -h|--help)
+      sed -n '1,18p' "$0"
+      exit 0 ;;
+    -*)
+      echo "Unknown flag: $1" >&2; exit 2 ;;
+    *)
+      API_KEY="$1"; shift ;;
+  esac
+done
 
 echo "═══════════════════════════════════════════════════════"
 echo "║  Createya — skills + MCP installer                  ║"
@@ -24,25 +50,94 @@ command -v git >/dev/null 2>&1 || { echo "✗ git is required"; exit 1; }
 TEMP_DIR=$(mktemp -d)
 trap 'rm -rf ${TEMP_DIR}' EXIT
 
-echo "↓ Cloning createya-mcp (${REPO_TAG})..."
+echo "↓ Fetching createya-mcp (${REPO_TAG})..."
 git clone --depth 1 --branch "${REPO_TAG}" "${REPO_URL}" "${TEMP_DIR}/createya-mcp" 2>/dev/null
+
+# ── Discover available skills (any directory under skills/ with SKILL.md) ────
+declare -a ALL_SKILLS=()
+for d in "${TEMP_DIR}/createya-mcp/skills/"*/; do
+  [[ -f "${d}SKILL.md" ]] || continue
+  ALL_SKILLS+=("$(basename "$d")")
+done
+
+if [[ "${LIST_ONLY}" == true ]]; then
+  echo ""
+  echo "Available skills in ${REPO_URL} (${REPO_TAG}):"
+  for s in "${ALL_SKILLS[@]}"; do
+    desc=$(awk '/^description:/{sub(/^description: */,""); print; exit}' "${TEMP_DIR}/createya-mcp/skills/${s}/SKILL.md" | head -c 100)
+    printf "  • %-22s %s\n" "${s}" "${desc}…"
+  done
+  echo ""
+  exit 0
+fi
+
+# Apply --skills filter if given (CSV → array)
+declare -a SKILLS=()
+if [[ -n "${SKILL_FILTER}" ]]; then
+  IFS=',' read -ra FILTER <<< "${SKILL_FILTER}"
+  for want in "${FILTER[@]}"; do
+    found=false
+    for have in "${ALL_SKILLS[@]}"; do
+      [[ "$have" == "$want" ]] && { SKILLS+=("$want"); found=true; break; }
+    done
+    [[ "$found" == false ]] && echo "  ⚠ skill '${want}' not found in repo, skipping"
+  done
+else
+  SKILLS=("${ALL_SKILLS[@]}")
+fi
+
+if (( ${#SKILLS[@]} == 0 )); then
+  echo "✗ No skills selected. Run with --list to see what's available."
+  exit 1
+fi
+
+echo "→ Skills to install: ${SKILLS[*]}"
+echo ""
+
+# ── Helper: copy one skill into target dir, idempotent (rm + cp) ─────────────
+install_skill() {
+  local skill="$1" target="$2"
+  # SC2115: ${var:?} fails the script if either var is empty/unset, preventing
+  # an accidental `rm -rf "/<skill>"` (would nuke the filesystem) or
+  # `rm -rf "<target>/"` (target deleted whole).
+  rm -rf "${target:?}/${skill:?}"
+  mkdir -p "${target}"
+  cp -R "${TEMP_DIR}/createya-mcp/skills/${skill}" "${target}/"
+}
 
 INSTALLED=()
 MCP_REGISTERED=false
 
-# ── Helper: copy skills/<name>/* into target dir ──────────────────────────────
-install_skill() {
-  local skill_name="$1" target_dir="$2"
-  mkdir -p "$target_dir"
-  cp -r "${TEMP_DIR}/createya-mcp/skills/${skill_name}/"* "$target_dir/"
-}
+# ── Detect agents ────────────────────────────────────────────────────────────
+HAS_CLAUDE=false
+HAS_AGENTS=false           # any tool that reads ~/.agents/skills/ (Codex, Cursor, OpenClaw, opencode per agentskills.io)
+HAS_CURSOR_LEGACY=false    # Cursor 2.x also reads ~/.cursor/skills/
+HAS_OPENCLAW_LEGACY=false  # some OpenClaw builds expect ~/.openclaw/skills/
+
+[[ -d "${HOME}/.claude" ]] || command -v claude >/dev/null 2>&1 && HAS_CLAUDE=true
+
+if [[ -d "${HOME}/.agents" ]] \
+   || command -v codex >/dev/null 2>&1 \
+   || command -v cursor >/dev/null 2>&1 \
+   || command -v openclaw >/dev/null 2>&1 \
+   || command -v opencode >/dev/null 2>&1 \
+   || [[ -d "${HOME}/.codex" ]] \
+   || [[ -d "${HOME}/.cursor" ]] \
+   || [[ -d "${HOME}/.openclaw" ]] \
+   || [[ -d "${HOME}/.config/opencode" ]]; then
+  HAS_AGENTS=true
+fi
+
+[[ -d "${HOME}/.cursor" ]]   && HAS_CURSOR_LEGACY=true
+[[ -d "${HOME}/.openclaw" ]] && HAS_OPENCLAW_LEGACY=true
 
 # ── Claude Code ──────────────────────────────────────────────────────────────
-if [[ -d "${HOME}/.claude" ]] || command -v claude >/dev/null 2>&1; then
-  echo "→ Claude Code detected"
-  install_skill createya          "${HOME}/.claude/skills/createya"
-  install_skill creative-director "${HOME}/.claude/skills/creative-director"
-  INSTALLED+=("Skills: ~/.claude/skills/{createya,creative-director}/")
+if [[ "${HAS_CLAUDE}" == true ]]; then
+  echo "→ Claude Code detected — installing into ~/.claude/skills/"
+  for skill in "${SKILLS[@]}"; do
+    install_skill "$skill" "${HOME}/.claude/skills"
+  done
+  INSTALLED+=("Claude Code: ~/.claude/skills/{$(IFS=,; echo "${SKILLS[*]}")}")
 
   if command -v claude >/dev/null 2>&1; then
     if [[ -n "${API_KEY}" ]]; then
@@ -54,7 +149,7 @@ if [[ -d "${HOME}/.claude" ]] || command -v claude >/dev/null 2>&1; then
         && MCP_REGISTERED=true \
         || echo "  ⚠ MCP registration failed — run manually (see below)"
     else
-      echo "→ Registering MCP server (no auth — add key later or use OAuth)..."
+      echo "→ Registering MCP server (no auth — OAuth on first use)..."
       claude mcp add createya "${MCP_URL}" \
         --transport http \
         --scope user 2>/dev/null \
@@ -65,58 +160,67 @@ if [[ -d "${HOME}/.claude" ]] || command -v claude >/dev/null 2>&1; then
   fi
 fi
 
-# ── OpenClaw ─────────────────────────────────────────────────────────────────
-if [[ -d "${HOME}/.openclaw/workspace" ]] || command -v openclaw >/dev/null 2>&1; then
-  echo "→ OpenClaw detected"
-  install_skill createya          "${HOME}/.openclaw/workspace/skills/createya"
-  install_skill creative-director "${HOME}/.openclaw/workspace/skills/creative-director"
-  INSTALLED+=("OpenClaw skills: ~/.openclaw/workspace/skills/{createya,creative-director}/")
+# ── Universal ~/.agents/skills/ — Codex CLI / Cursor / OpenClaw / opencode ───
+# Per agentskills.io standard, all four tools read ~/.agents/skills/<name>/SKILL.md.
+if [[ "${HAS_AGENTS}" == true ]]; then
+  echo "→ Non-Claude agent detected — installing into ~/.agents/skills/"
+  for skill in "${SKILLS[@]}"; do
+    install_skill "$skill" "${HOME}/.agents/skills"
+  done
+  INSTALLED+=("Codex/Cursor/OpenClaw/opencode: ~/.agents/skills/{$(IFS=,; echo "${SKILLS[*]}")}")
+
+  # Drop AGENTS.md at user level for Codex CLI (top-of-context file).
+  if [[ -d "${HOME}/.codex" ]] || command -v codex >/dev/null 2>&1; then
+    cp "${TEMP_DIR}/createya-mcp/AGENTS.md" "${HOME}/.codex/AGENTS.md" 2>/dev/null \
+      || cp "${TEMP_DIR}/createya-mcp/AGENTS.md" "${HOME}/.agents/AGENTS.md" 2>/dev/null || true
+  fi
 fi
 
-# ── OpenAI Codex CLI ─────────────────────────────────────────────────────────
-if [[ -d "${HOME}/.codex" ]] || command -v codex >/dev/null 2>&1; then
-  echo "→ OpenAI Codex CLI detected"
-  install_skill createya          "${HOME}/.codex/skills/createya"
-  install_skill creative-director "${HOME}/.codex/skills/creative-director"
-  cp "${TEMP_DIR}/createya-mcp/AGENTS.md" "${HOME}/.codex/AGENTS.md"
-  INSTALLED+=("Codex skills: ~/.codex/skills/{createya,creative-director}/ + AGENTS.md")
+# Cursor 2.x legacy fallback — also looks in ~/.cursor/skills/. Mirror there
+# so the skill is picked up regardless of whether the user has a fresh Cursor
+# (reads ~/.agents/) or older one (reads ~/.cursor/).
+if [[ "${HAS_CURSOR_LEGACY}" == true ]]; then
+  for skill in "${SKILLS[@]}"; do
+    install_skill "$skill" "${HOME}/.cursor/skills"
+  done
+  INSTALLED+=("Cursor (legacy path): ~/.cursor/skills/")
 fi
 
-# ── Cursor ────────────────────────────────────────────────────────────────────
-if [[ -d "${HOME}/.cursor" ]] || command -v cursor >/dev/null 2>&1; then
-  echo "→ Cursor detected"
-  install_skill createya          "${HOME}/.cursor/skills/createya"
-  install_skill creative-director "${HOME}/.cursor/skills/creative-director"
-  INSTALLED+=("Cursor skills: ~/.cursor/skills/{createya,creative-director}/")
+# OpenClaw legacy fallback (~/.openclaw/skills/, official path).
+if [[ "${HAS_OPENCLAW_LEGACY}" == true ]]; then
+  for skill in "${SKILLS[@]}"; do
+    install_skill "$skill" "${HOME}/.openclaw/skills"
+  done
+  INSTALLED+=("OpenClaw (native path): ~/.openclaw/skills/")
 fi
+
+# opencode also reads ~/.claude/skills/ — already covered if HAS_CLAUDE=true.
 
 # ── Summary ──────────────────────────────────────────────────────────────────
 echo ""
 if (( ${#INSTALLED[@]} == 0 )); then
-  echo "⚠ No supported agent detected (Claude Code, OpenClaw, Codex, Cursor)."
+  echo "⚠ No supported agent detected."
+  echo "  Supported: Claude Code, opencode, Codex CLI, Cursor, OpenClaw."
   echo "  Connect MCP manually — see configs/ in the repo."
-else
-  echo "✓ Installed:"
-  for line in "${INSTALLED[@]}"; do
-    echo "   • $line"
-  done
+  echo ""
+  exit 0
 fi
 
+echo "✓ Installed:"
+for line in "${INSTALLED[@]}"; do
+  echo "   • $line"
+done
 echo ""
 
-if [[ "${MCP_REGISTERED}" == false ]] && ([[ -d "${HOME}/.claude" ]] || command -v claude >/dev/null 2>&1); then
-  echo "  To register the MCP server manually:"
+if [[ "${MCP_REGISTERED}" == false ]] && [[ "${HAS_CLAUDE}" == true ]]; then
+  echo "  To register the MCP server in Claude Code manually:"
   echo ""
   if [[ -n "${API_KEY}" ]]; then
     echo "  claude mcp add createya ${MCP_URL} \\"
-    echo "    --transport http \\"
-    echo "    --header \"Authorization: Bearer ${API_KEY}\" \\"
-    echo "    --scope user"
+    echo "    --transport http --header \"Authorization: Bearer ${API_KEY}\" --scope user"
   else
     echo "  claude mcp add createya ${MCP_URL} \\"
-    echo "    --transport http \\"
-    echo "    --header \"Authorization: Bearer crya_sk_live_...\" \\"
-    echo "    --scope user"
+    echo "    --transport http --header \"Authorization: Bearer crya_sk_...\" --scope user"
     echo ""
     echo "  Get your key: https://createya.ai/settings/api-keys"
   fi
@@ -124,13 +228,15 @@ if [[ "${MCP_REGISTERED}" == false ]] && ([[ -d "${HOME}/.claude" ]] || command 
 fi
 
 if [[ -z "${API_KEY}" ]] && [[ "${MCP_REGISTERED}" == true ]]; then
-  echo "  ⚠ MCP registered without an API key."
-  echo "  Add your key: https://createya.ai/settings/api-keys"
-  echo "  Then re-run: claude mcp add createya ${MCP_URL} \\"
-  echo "    --transport http --header \"Authorization: Bearer crya_sk_live_...\" --scope user"
+  echo "  ⚠ MCP registered without an API key (will OAuth on first call, or add manually):"
+  echo "    claude mcp remove createya && \\"
+  echo "    claude mcp add createya ${MCP_URL} \\"
+  echo "      --transport http --header \"Authorization: Bearer crya_sk_...\" --scope user"
   echo ""
 fi
 
+echo "  Restart your AI agent so it picks up the new skills + MCP."
+echo ""
 echo "  Try in chat:"
 echo "    «Generate a product photo of a yellow hoodie for e-commerce»"
 echo "    «Make a lookbook shoot, 6 outfits on an AI model»"

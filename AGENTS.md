@@ -10,10 +10,10 @@
 ## Setup — one command
 
 ```bash
-curl -fsSL https://api.createya.ai/install | bash -s -- crya_sk_live_YOUR_KEY
+curl -fsSL https://api.createya.ai/install | bash -s -- crya_sk_YOUR_KEY
 ```
 
-**Get a key first:** https://createya.ai/settings/api-keys (format: `crya_sk_live_<32hex>`)
+**Get a key first:** https://createya.ai/settings/api-keys (format: `crya_sk_<32hex>`)
 
 This single command:
 1. Installs `createya` and `creative-director` skills for your agent
@@ -24,15 +24,18 @@ This single command:
 
 ### What gets installed per agent
 
-| Agent | MCP registered | Skills |
+| Agent | MCP registered | Skills target |
 |---|---|---|
-| Claude Code | ✅ `claude mcp add` | ✅ `~/.claude/skills/` |
-| OpenAI Codex | — | ✅ `~/.codex/skills/` + `AGENTS.md` |
-| Cursor | — | ✅ `~/.cursor/skills/` |
-| OpenClaw | — | ✅ `~/.openclaw/workspace/skills/` |
-| Cline / Windsurf / Continue | — | See `configs/` for manual JSON snippets |
+| Claude Code | ✅ `claude mcp add` | `~/.claude/skills/<skill>/` |
+| OpenAI Codex CLI | — | `~/.agents/skills/<skill>/` (+ `~/.codex/AGENTS.md`) |
+| Cursor (2.x+) | — | `~/.agents/skills/<skill>/` (+ legacy `~/.cursor/skills/`) |
+| OpenClaw | — | `~/.agents/skills/<skill>/` (+ legacy `~/.openclaw/skills/`) |
+| opencode | — | uses `~/.claude/skills/` directly (no separate target) |
+| Cline / Windsurf / Continue | — | manual JSON in [`configs/`](configs/) |
 
-For Cline, Windsurf, or Continue — copy the relevant config from `configs/` and add your key.
+`~/.agents/skills/` is the [agentskills.io](https://agentskills.io) cross-tool standard — Codex, Cursor, OpenClaw, and opencode all read it. Claude Code stays on `~/.claude/skills/`.
+
+For Cline, Windsurf, or Continue — copy the relevant config from [`configs/`](configs/) and add your key.
 
 ---
 

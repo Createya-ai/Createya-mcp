@@ -29,7 +29,7 @@ Cursor поддерживает MCP для подключения к Createya AP
       "url": "https://api.createya.ai/mcp",
       "type": "streamable-http",
       "headers": {
-        "Authorization": "Bearer crya_sk_live_ваш_ключ"
+        "Authorization": "Bearer crya_sk_ваш_ключ"
       }
     }
   }

@@ -46,19 +46,19 @@ openclaw plugins install ./createya-mcp
 
 **Вручную (если плагины не работают):**
 ```bash
-mkdir -p ~/.openclaw/workspace/skills/creative-director
+mkdir -p ~/.openclaw/skills/creative-director
 curl -fsSL https://raw.githubusercontent.com/Createya-ai/createya-mcp/main/skills/creative-director/SKILL.md \
-  -o ~/.openclaw/workspace/skills/creative-director/SKILL.md
+  -o ~/.openclaw/skills/creative-director/SKILL.md
 ```
 
 ### Шаг 3: Настроить API ключ
 
 ```bash
 # Добавить в ~/.openclaw/workspace/.env
-echo "CREATEYA_API_KEY=crya_sk_live_ваш_ключ" >> ~/.openclaw/workspace/.env
+echo "CREATEYA_API_KEY=crya_sk_ваш_ключ" >> ~/.openclaw/workspace/.env
 
 # Или прямо в openclaw.json
-openclaw config set env.CREATEYA_API_KEY crya_sk_live_ваш_ключ
+openclaw config set env.CREATEYA_API_KEY crya_sk_ваш_ключ
 ```
 
 Перезапустить gateway:
@@ -97,7 +97,7 @@ generate photo yellow hoodie product shot studio lighting
 
 ```bash
 # Создать рабочее пространство
-bash ~/.openclaw/workspace/skills/creative-director/scripts/setup.sh
+bash ~/.openclaw/skills/creative-director/scripts/setup.sh
 
 # Загрузить референсы перед работой
 bash creative/scripts/sync.sh
@@ -122,7 +122,7 @@ bash creative/scripts/sync.sh
 
 Запусти `setup.sh` чтобы структура создалась автоматически:
 ```bash
-bash ~/.openclaw/workspace/skills/creative-director/scripts/setup.sh \
+bash ~/.openclaw/skills/creative-director/scripts/setup.sh \
   --dir ~/.openclaw/workspace/creative
 ```
 
