@@ -100,17 +100,17 @@ generate photo yellow hoodie product shot studio lighting
 bash ~/.openclaw/workspace/skills/creative-director/scripts/setup.sh
 
 # Загрузить референсы перед работой
-bash creative/scripts/sync.sh
+bash createya/scripts/sync.sh
 ```
 
 ## Рабочее пространство
 
-Создай папку `creative/` в рабочей директории OpenClaw:
+Создай папку `createya/` в рабочей директории OpenClaw:
 
 ```
 ~/.openclaw/workspace/
 ├── skills/creative-director/   # skill files
-├── creative/                   # твои рабочие файлы
+├── createya/                   # твои рабочие файлы
 │   ├── assets/
 │   │   ├── models/             # референсные модели
 │   │   ├── products/           # товары для съёмки

@@ -88,7 +88,7 @@ Negative: [copy from hero exactly]
 После Pass 2 — все 9 файлов скачиваются через `download.sh`:
 
 ```
-creative/assets/models/<character-slug>/
+createya/characters/<character-slug>/
 ├── 01-hero-front.jpg
 ├── 02-three-quarter-left.jpg
 ├── 03-three-quarter-right.jpg

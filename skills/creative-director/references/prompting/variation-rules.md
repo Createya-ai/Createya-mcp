@@ -60,7 +60,7 @@ Camera: <brand model>, <focal length> lens, f/<aperture>, <shutter if relevant>.
 
 ## JSON output format для batch-генерации
 
-Skill сохраняет вариации в `creative/sessions/<id>/variations/`:
+Skill сохраняет вариации в `createya/sessions/<id>/variations/`:
 
 ```json
 {

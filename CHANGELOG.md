@@ -26,7 +26,7 @@
 - `camera/` — 15 (portrait 85/105mm, beauty 100mm macro, fashion 50/35mm, environmental 24mm, ultra-wide 16mm, full-body 50mm, tele compressor 135mm, telephoto 200mm, flat-lay top-down, hero low-angle, macro detail 90mm, tilt-shift miniature, close-up 85mm)
 - `composition/` — 10 (rule of thirds, centered, leading lines, frame within frame, negative space, diagonal, triangle, golden ratio, pattern repetition, foreground depth)
 - `pose/` — 18 (frontal neutral, 3/4 confident, hand on hip, walking, sitting casual/formal, leaning, hands in pockets, looking off/down, laughing, serious, movement caught, cross-legged, lying, touching hair, crossed arms, vulnerable)
-- `style/` — 22 (clean/luxury ecommerce, editorial Vogue/gritty, personal brand creative/corporate, portfolio classic, product artistic minimalist/moody, flat-lay magazine, lifestyle bright, UGC raw/polished, beauty glamour/natural, streetwear, cinematic, documentary, vintage 70s, Y2K, cottagecore, maximalist)
+- `style/` — 22 (clean/luxury ecommerce, editorial Vogue/gritty, personal brand createya/corporate, portfolio classic, product artistic minimalist/moody, flat-lay magazine, lifestyle bright, UGC raw/polished, beauty glamour/natural, streetwear, cinematic, documentary, vintage 70s, Y2K, cottagecore, maximalist)
 - `backdrop/` — 20 (white/black seamless, grey light/dark, beige, pastel pink/blue, terracotta, deep blue, forest green, brick, concrete, wood, marble, linen, gradient, color gel, bokeh, mirror, plexiglass)
 - `atmosphere/` — 13 (haze, smoke, rain, snow, wind, sunbeams, fog, confetti, light leaks, lens flare, bokeh particles, water reflection, geometric shadows)
 - `locations/_custom/` + README — пустая папка для пользовательских локаций с pointer на asset folders в Createya через `folder_slug`
@@ -34,11 +34,11 @@
 Каждый пресет — markdown с YAML frontmatter (`name`, `type`, `display_name`, `tags`, `fits_categories`, `not_for`, `inject_text` 80-120 слов английского) + 5 секций на русском (Кратко / Технические параметры / Когда подходит / Когда НЕ подходит / Как читается на финальном фото).
 
 **Bash скрипты** в `skills/creative-director/scripts/`:
-- `setup.sh` — interactive setup workspace в проекте юзера (`creative/`, `MASTER_CONTEXT.md`, `.env`, `.gitignore`, `logs/`). Поддерживает non-interactive run для CI.
-- `sync.sh` — sync local `creative/assets/` → Createya S3 через presigned URL, sha256 dedup, auto-refresh expiring uploads
+- `setup.sh` — interactive setup workspace в проекте юзера (`createya/`, `MASTER_CONTEXT.md`, `.env`, `.gitignore`, `logs/`). Поддерживает non-interactive run для CI.
+- `sync.sh` — sync local `createya/assets/` → Createya S3 через presigned URL, sha256 dedup, auto-refresh expiring uploads
 - `upload.sh` — single file upload, возвращает CDN URL на stdout
-- `download.sh` — download generation result в `creative/sessions/<latest>/results/` (или явный target)
-- `intake.sh` — копировать attached файл в `creative/assets/<type>/<slug>/` с auto-numbering
+- `download.sh` — download generation result в `createya/sessions/<latest>/results/` (или явный target)
+- `intake.sh` — копировать attached файл в `createya/assets/<type>/<slug>/` с auto-numbering
 - `preview-grid.sh` — генерит HTML grid превью результатов сессии, открывает в браузере
 
 **Multi-agent compatibility**:
@@ -61,7 +61,7 @@
 - **MCP** — все API-операции (`mcp__createya__list_models`, `run_model`, `get_run_status`, `get_balance`, `request_upload_url`)
 - **Bash скрипты** — I/O с локальной FS (sync, upload, download, intake, preview)
 - **Skill** — оркестрация: decision tree, prompt formulas, presets, vision QA, state management
-- **Локальная папка `creative/`** — главный UX (юзер видит файлы в Finder, drag-drop в чат для intake)
+- **Локальная папка `createya/`** — главный UX (юзер видит файлы в Finder, drag-drop в чат для intake)
 
 Vision генерится **локально через Claude Read** (нативная multimodal vision у юзера в подписке), не серверным Gemini Flash worker'ом — экономия для нас и для юзера.
 

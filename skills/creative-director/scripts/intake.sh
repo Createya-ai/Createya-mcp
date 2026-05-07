@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Intake: copy an attached file (e.g. one Claude Code received from the user via
-# drag-drop / paperclip) into creative/assets/<type>/<slug>/ with auto-numbered name.
+# drag-drop / paperclip) into createya/assets/<type>/<slug>/ with auto-numbered name.
 #
 # Skill calls this when it sees an image attachment. Skill is responsible for
 # classifying type (model | product | location | aesthetic | brand) and slug
@@ -36,7 +36,7 @@ SLUG_CLEAN="$(echo "$SLUG" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9-]/-/g'
 [[ -n "$SLUG_CLEAN" ]] || { echo "✗ Slug sanitized to empty: $SLUG" >&2; exit 1; }
 
 PROJECT_ROOT="$(pwd)"
-DEST_DIR="$PROJECT_ROOT/creative/assets/$TYPE/$SLUG_CLEAN"
+DEST_DIR="$PROJECT_ROOT/createya/assets/$TYPE/$SLUG_CLEAN"
 mkdir -p "$DEST_DIR"
 
 # Pick next available numbered filename

@@ -47,7 +47,7 @@ CHARACTER SHEET: Sofia
 - Distinguishing: subtle freckles across nose bridge, small mole left cheek
 ```
 
-Это записывается в `creative/assets/models/<slug>/_character.md` ПЕРЕД генерацией.
+Это записывается в `createya/characters/<slug>/_character.md` ПЕРЕД генерацией.
 
 ### Шаг 1 — Anchor shot (front straight)
 
@@ -98,7 +98,7 @@ Subject must look directly at camera with neutral expression.
 
 ### Шаг 4 — Сохранение в assets
 
-Все 9 кадров → `creative/assets/models/<slug>/`:
+Все 9 кадров → `createya/characters/<slug>/`:
 - `01-front.jpg`
 - `02-3q-left.jpg`
 - ... etc

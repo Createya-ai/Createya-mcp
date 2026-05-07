@@ -90,7 +90,7 @@ bash ~/.claude/skills/creative-director/scripts/setup.sh
 
 Создаётся структура:
 ```
-creative/
+createya/
 ├── assets/
 │   ├── models/      # референсные модели
 │   ├── products/    # товары
@@ -131,12 +131,12 @@ generate ecommerce photo of yellow hoodie
 ### Синхронизация папки с референсами
 
 ```bash
-# Положи референсы в creative/assets/models/
+# Положи референсы в createya/characters/
 # Запусти синхронизацию
-bash creative/scripts/sync.sh
+bash createya/scripts/sync.sh
 
 # Или только одну папку
-bash creative/scripts/sync.sh models/sarah
+bash createya/scripts/sync.sh models/sarah
 ```
 
 После синхронизации агент видит CDN URL всех референсов в `.assets-index.json` и может использовать их напрямую.
@@ -154,11 +154,11 @@ bash creative/scripts/sync.sh models/sarah
 ### Модель по референсу
 
 ```bash
-# Положи фото в creative/assets/models/sarah.jpg
-bash creative/scripts/sync.sh models/sarah.jpg
+# Положи фото в createya/characters/sarah.jpg
+bash createya/scripts/sync.sh models/sarah.jpg
 ```
 ```
-В creative/assets/models/ есть sarah.jpg.
+В createya/characters/ есть sarah.jpg.
 Воссоздай модель, сделай три ракурса в разных образах для лукбука.
 ```
 

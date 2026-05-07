@@ -9,8 +9,8 @@
 set -euo pipefail
 
 PROJECT_ROOT="$(pwd)"
-SESSIONS_DIR="$PROJECT_ROOT/creative/sessions"
-[[ -d "$SESSIONS_DIR" ]] || { echo "✗ No creative/sessions/ — run setup.sh first" >&2; exit 1; }
+SESSIONS_DIR="$PROJECT_ROOT/createya/sessions"
+[[ -d "$SESSIONS_DIR" ]] || { echo "✗ No createya/sessions/ — run setup.sh first" >&2; exit 1; }
 
 SESSION="${1:-}"
 if [[ -z "$SESSION" ]]; then

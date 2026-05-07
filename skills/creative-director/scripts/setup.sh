@@ -6,7 +6,7 @@
 #   ~/.claude/skills/creative-director/scripts/setup.sh
 #
 # What it creates:
-#   ./creative/                       — local workspace (assets, sessions)
+#   ./createya/                       — local workspace (assets, sessions)
 #   ./MASTER_CONTEXT.md               — brand voice, learnings, custom presets refs
 #   ./.env                            — CREATEYA_API_KEY (gitignored)
 #   ./logs/                           — generation history
@@ -81,27 +81,27 @@ fi
 
 # --- 3. Workspace folders -------------------------------------------------
 mkdir -p \
-  "$PROJECT_ROOT/creative/assets/models" \
-  "$PROJECT_ROOT/creative/assets/products" \
-  "$PROJECT_ROOT/creative/assets/locations" \
-  "$PROJECT_ROOT/creative/assets/aesthetics" \
-  "$PROJECT_ROOT/creative/assets/brand" \
-  "$PROJECT_ROOT/creative/sessions" \
+  "$PROJECT_ROOT/createya/characters" \
+  "$PROJECT_ROOT/createya/assets/products" \
+  "$PROJECT_ROOT/createya/assets/locations" \
+  "$PROJECT_ROOT/createya/assets/aesthetics" \
+  "$PROJECT_ROOT/createya/assets/brand" \
+  "$PROJECT_ROOT/createya/sessions" \
   "$PROJECT_ROOT/logs"
-echo "✓ Created creative/ workspace"
+echo "✓ Created createya/ workspace"
 
 # Store assets path in a well-known location so the agent can find it
-echo "$PROJECT_ROOT/creative/assets" > "$PROJECT_ROOT/creative/.assets-path"
+echo "$PROJECT_ROOT/createya/assets" > "$PROJECT_ROOT/createya/.assets-path"
 
 # Open the assets folder in Finder (macOS) so the user sees it immediately
 if [[ "$(uname)" == "Darwin" ]]; then
-  open "$PROJECT_ROOT/creative/assets/" 2>/dev/null || true
+  open "$PROJECT_ROOT/createya/assets/" 2>/dev/null || true
 fi
 
 # Initial empty index — sync.sh will populate it
-if [[ ! -f "$PROJECT_ROOT/creative/.assets-index.json" ]]; then
-  echo '{}' > "$PROJECT_ROOT/creative/.assets-index.json"
-  echo "✓ Created creative/.assets-index.json"
+if [[ ! -f "$PROJECT_ROOT/createya/.assets-index.json" ]]; then
+  echo '{}' > "$PROJECT_ROOT/createya/.assets-index.json"
+  echo "✓ Created createya/.assets-index.json"
 fi
 
 # Touch logs file so it exists
@@ -123,7 +123,7 @@ if [[ ! -f "$PROJECT_ROOT/MASTER_CONTEXT.md" ]]; then
 
 ## Workspace structure
 
-Drop reference images into `creative/assets/`:
+Drop reference images into `createya/assets/`:
 - `models/` — face/body photos to recreate or use
 - `products/` — товары (по подпапкам: `products/yellow-hoodie-bomma/`)
 - `locations/` — локации (по подпапкам: `locations/loft-studio-ny/`)
@@ -164,8 +164,8 @@ add_to_gitignore() {
 }
 add_to_gitignore ".env"
 add_to_gitignore ".env.tmp"
-add_to_gitignore "creative/.assets-index.json"
-add_to_gitignore "creative/sessions/*/results/"
+add_to_gitignore "createya/.assets-index.json"
+add_to_gitignore "createya/sessions/*/results/"
 add_to_gitignore ".skill-state/"
 echo "✓ Updated .gitignore"
 
@@ -189,7 +189,7 @@ echo "════════════════════════�
 echo "║  Setup complete                                            ║"
 echo "════════════════════════════════════════════════════════════"
 echo ""
-ASSETS_PATH="$PROJECT_ROOT/creative/assets"
+ASSETS_PATH="$PROJECT_ROOT/createya/assets"
 echo "┌─────────────────────────────────────────────────────────────┐"
 echo "│  📁 Папка для файлов открыта в Finder:                       │"
 echo "│                                                               │"

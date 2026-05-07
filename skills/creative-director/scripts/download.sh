@@ -6,11 +6,11 @@
 # Usage:
 #   ./scripts/download.sh <url> [target-path]
 #
-# If target-path is omitted, saves to creative/sessions/<latest>/results/<sanitized>.<ext>
+# If target-path is omitted, saves to createya/sessions/<latest>/results/<sanitized>.<ext>
 #
 # Examples:
 #   ./scripts/download.sh https://cdn-new.createya.ai/.../result.jpg
-#   ./scripts/download.sh https://... creative/sessions/2026-05-03-yellow-hoodie/results/etalon.jpg
+#   ./scripts/download.sh https://... createya/sessions/2026-05-03-yellow-hoodie/results/etalon.jpg
 
 set -euo pipefail
 
@@ -21,8 +21,8 @@ PROJECT_ROOT="$(pwd)"
 
 # If no target — auto-pick latest session
 if [[ -z "$TARGET" ]]; then
-  SESSIONS_DIR="$PROJECT_ROOT/creative/sessions"
-  [[ -d "$SESSIONS_DIR" ]] || { echo "✗ No creative/sessions/ — run setup.sh first" >&2; exit 1; }
+  SESSIONS_DIR="$PROJECT_ROOT/createya/sessions"
+  [[ -d "$SESSIONS_DIR" ]] || { echo "✗ No createya/sessions/ — run setup.sh first" >&2; exit 1; }
 
   latest="$(ls -1t "$SESSIONS_DIR" 2>/dev/null | head -1)"
   if [[ -z "$latest" ]]; then
