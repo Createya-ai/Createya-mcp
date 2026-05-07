@@ -386,7 +386,7 @@ AskUserQuestion({
 list_models        →  curl -H "Authorization: Bearer $KEY" https://api.createya.ai/v1/models | jq
 run_model          →  curl -X POST .../v1/run -d '{"model":"...","input":{...}}' | jq
 get_run_status     →  curl .../v1/runs/<id> | jq
-get_balance        →  curl .../v1/balance | jq
+get_balance        →  curl .../v1/me | jq '.credits_balance'
 request_upload_url →  ./scripts/upload.sh <file>     (или curl .../v1/uploads/presigned)
 ```
 

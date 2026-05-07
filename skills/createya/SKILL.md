@@ -64,7 +64,7 @@ createya:run_model({
 ### 4. Check balance with `get_balance` if needed
 
 ```
-createya:get_balance() → { credits: <число>, workspace: "personal" }
+createya:get_balance() → { credits_balance: <число> }
 ```
 
 If user is about to do an expensive operation and balance is low — warn them and link to https://createya.ai for top-up.

@@ -41,10 +41,10 @@ def run(model: str, input_: dict) -> dict:
         if d["status"] in ("completed", "failed"):
             return d
 
-def balance() -> dict:
-    r = requests.get(f"{BASE}/balance", headers=headers())
+def balance() -> int:
+    r = requests.get(f"{BASE}/me", headers=headers())
     r.raise_for_status()
-    return r.json()
+    return r.json()["credits_balance"]
 
 def models(category: str = None) -> list:
     r = requests.get(f"{BASE}/models", headers=headers())

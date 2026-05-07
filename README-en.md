@@ -338,7 +338,7 @@ curl https://api.createya.ai/v1/runs/run_01J2... \
 | `GET` | `/v1/models` | Full catalog with `parameters_schema` |
 | `POST` | `/v1/run` | Run a generation |
 | `GET` | `/v1/runs/{run_id}` | Async run status |
-| `GET` | `/v1/balance` | Workspace credit balance |
+| `GET` | `/v1/me` | Profile + credit balance (`credits_balance`) |
 | `POST` | `/v1/uploads` | Upload an image/video to Createya CDN (for image-to-image) |
 | `GET` | `/v1/openapi.json` | OpenAPI 3.1 spec (for SDK auto-generation) |
 

@@ -114,9 +114,9 @@ curl -X POST https://api.createya.ai/v1/run \
 curl https://api.createya.ai/v1/runs/{run_id} \
   -H "Authorization: Bearer $CREATEYA_API_KEY"
 
-# Balance
-curl https://api.createya.ai/v1/balance \
-  -H "Authorization: Bearer $CREATEYA_API_KEY"
+# Balance (via /v1/me)
+curl https://api.createya.ai/v1/me \
+  -H "Authorization: Bearer $CREATEYA_API_KEY" | jq '.credits_balance'
 ```
 
 Full OpenAPI spec: https://api.createya.ai/v1/openapi.json

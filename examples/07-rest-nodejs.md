@@ -47,9 +47,10 @@ async function pollRun(runId: string, intervalMs = 10_000, timeoutMs = 300_000):
   throw new Error(`Timeout after ${timeoutMs}ms for run ${runId}`);
 }
 
-export async function balance(): Promise<{ credits: number; workspace: string }> {
-  const r = await fetch(`${BASE}/balance`, { headers: headers() });
-  return r.json();
+export async function balance(): Promise<number> {
+  const r = await fetch(`${BASE}/me`, { headers: headers() });
+  const data = await r.json();
+  return data.credits_balance;
 }
 
 export async function models(category?: "image" | "video"): Promise<unknown[]> {

@@ -46,8 +46,8 @@ curl -X POST $BASE/v1/run \
 ### `GET /v1/runs/{id}`
 Статус async-генерации.
 
-### `GET /v1/balance`
-Баланс кредитов.
+### `GET /v1/me`
+Профиль пользователя + баланс кредитов (`credits_balance`).
 
 ### `POST /v1/uploads/presigned`
 **Главный endpoint для skill'а** — получить presigned PUT URL.

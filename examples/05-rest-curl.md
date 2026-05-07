@@ -113,8 +113,8 @@ curl https://api.createya.ai/v1/models \
 ## 6. Проверить баланс
 
 ```bash
-curl https://api.createya.ai/v1/balance \
-  -H "Authorization: Bearer $CREATEYA_API_KEY" | jq .
+curl https://api.createya.ai/v1/me \
+  -H "Authorization: Bearer $CREATEYA_API_KEY" | jq '.credits_balance'
 ```
 
 ## Коды ошибок

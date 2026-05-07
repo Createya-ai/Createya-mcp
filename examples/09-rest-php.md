@@ -53,9 +53,10 @@ class CreateyaClient
         throw new \RuntimeException("Poll timeout for {$runId}");
     }
 
-    public function balance(): array
+    public function balance(): int
     {
-        return $this->request('GET', '/balance');
+        $data = $this->request('GET', '/me');
+        return $data['credits_balance'];
     }
 
     private function request(string $method, string $path, ?array $body = null): array
