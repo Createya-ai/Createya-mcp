@@ -43,9 +43,9 @@
       "Use Creative Director to plan a product shoot",
       "Use Createya to check available models"
     ],
-    "brandColor": "#7C3AED",
+    "brandColor": "#00D1B9",
     "composerIcon": "./assets/favicon.svg",
-    "logo": "./assets/logo.png",
+    "logo": "./assets/favicon.svg",
     "screenshots": []
   }
 }

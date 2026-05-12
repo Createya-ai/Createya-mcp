@@ -10,6 +10,7 @@
 - **Codex plugin** in `plugins/createya-mcp/`:
   - `.codex-plugin/plugin.json` — Codex Plugins UI metadata (name, logo, starter prompts)
   - `.mcp.json` — Createya MCP endpoint for Codex plugin install/auth flows
+  - docs: `docs/codex-plugin.md`
   - `skills/` and `assets/` — generated copies synced from repo root
 - **Local workspace** is created per-project in `<cwd>/createya/` (assets, sessions, characters) — never on Desktop or in `~`. Run `~/.claude/skills/creative-director/scripts/setup.sh` once inside the project root to scaffold it.
 
