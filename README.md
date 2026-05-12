@@ -194,6 +194,8 @@ enabled = true
 
 **Codex plugin** — плагин лежит в [`plugins/createya-mcp/`](plugins/createya-mcp/). Он добавляет карточку Createya в Codex Plugins UI, логотип, MCP-сервер и все Createya skills из репозитория. Подробная инструкция: [`docs/codex-plugin.md`](docs/codex-plugin.md).
 
+Папки Creative Director (`createya/assets/models`, `products`, `locations`, `aesthetics`, `brand`) создаются в каждом проекте автоматически при первом запуске skill. Codex устанавливает плагин и авторизацию, но не запускает project-local shell scripts в момент установки, поэтому bootstrap делается самим skill.
+
 `skills/` в корне — source of truth. После редактирования skills или assets обнови пакет плагина:
 
 ```bash

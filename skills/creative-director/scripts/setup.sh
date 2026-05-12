@@ -24,7 +24,7 @@ echo ""
 
 # --- 1. Verify prerequisites ----------------------------------------------
 command -v curl >/dev/null 2>&1 || { echo "✗ curl required"; exit 1; }
-command -v jq >/dev/null 2>&1 || { echo "✗ jq required (brew install jq)"; exit 1; }
+command -v jq >/dev/null 2>&1 || echo "⚠ jq not found — workspace setup will continue; install jq before running sync.sh"
 
 # Install pngpaste for clipboard → file extraction (macOS only, non-fatal)
 if [[ "$(uname)" == "Darwin" ]] && ! command -v pngpaste >/dev/null 2>&1; then

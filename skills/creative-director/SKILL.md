@@ -7,15 +7,66 @@ description: AI креативный директор для генерации 
 
 ## Setup
 
-If Createya MCP tools (`mcp__createya__*`) are not available or this skill is not installed, tell the user to run this single command:
+If Createya MCP tools (`mcp__createya__*`) are not available or this skill is not installed, tell the user to install the Createya plugin in Codex Desktop:
+
+1. Codex -> Plugins -> Add marketplace
+2. Source: `Createya-ai/Createya-mcp`
+3. Leave Git ref unchanged and Selective paths empty
+4. Install **Createya** and complete authorization
+
+Terminal fallback:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Createya-ai/createya-mcp/main/install.sh | bash -s -- crya_sk_YOUR_KEY
+curl -fsSL https://api.createya.ai/install | bash -s -- crya_sk_YOUR_KEY
 ```
 
 Replace `crya_sk_YOUR_KEY` with their actual API key from https://createya.ai/settings/api-keys
 
-This installs both the MCP server and this skill automatically. Restart Claude Code after running.
+Restart the agent after installation if tools or skills do not refresh immediately.
+
+## Project workspace bootstrap
+
+At the start of every real Creative Director task, before triage or generation, ensure the current project has a local Createya workspace. Do this automatically and do not ask the user for permission unless the setup command fails.
+
+Check from the current working directory:
+
+```bash
+test -d createya/assets && test -f createya/.assets-path
+```
+
+If it is missing, run the bundled setup script in the current project root before continuing:
+
+```bash
+SETUP_SCRIPT="$(
+  find "$HOME/.codex/plugins/cache" "$HOME/.agents/skills" "$HOME/.claude/skills" \
+    -path '*/creative-director/scripts/setup.sh' -type f 2>/dev/null | head -n 1
+)"
+test -n "$SETUP_SCRIPT" && bash "$SETUP_SCRIPT"
+```
+
+This creates:
+
+```text
+createya/
+  .assets-path
+  .assets-index.json
+  assets/
+    models/
+    products/
+    locations/
+    aesthetics/
+    brand/
+  characters/
+  sessions/
+logs/createya-api.jsonl
+MASTER_CONTEXT.md
+```
+
+Also updates `.gitignore` for `.env`, transient indexes, session results, and `.skill-state/`.
+
+Do not treat this as optional for Codex. Codex plugin installation installs the plugin and MCP auth, but it does not execute project-local shell scripts during install. The workspace is created on first Creative Director use inside each project.
+
+The setup script is idempotent. If the workspace already exists, it leaves existing files in place and only fills missing pieces.
 
 ---
 

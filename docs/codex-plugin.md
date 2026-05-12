@@ -30,6 +30,50 @@ After install, Codex gets:
 - MCP server configuration for `https://api.createya.ai/mcp`
 - bundled skills: `createya`, `creative-director`, `createya-batch`, `character-sheet`
 
+## Creative Director workspace
+
+Codex installs the plugin and authorizes the MCP server, but it does not run
+project-local shell scripts at plugin install time. The Creative Director skill
+creates its per-project workspace on first use inside the current project.
+
+When you ask Codex to use Creative Director in a project, the skill checks for
+`createya/.assets-path`. If it is missing, the skill runs the bundled setup
+script automatically in the current project root. The setup creates:
+
+```text
+createya/
+  .assets-path
+  .assets-index.json
+  assets/
+    models/
+    products/
+    locations/
+    aesthetics/
+    brand/
+  characters/
+  sessions/
+logs/createya-api.jsonl
+MASTER_CONTEXT.md
+```
+
+Use these folders for references:
+
+- `createya/assets/models/` — people, faces, body references
+- `createya/assets/products/` — product photos
+- `createya/assets/locations/` — location references
+- `createya/assets/aesthetics/` — moodboards and visual references
+- `createya/assets/brand/` — logos, fonts, brand files
+
+Manual setup, if needed:
+
+```bash
+SETUP_SCRIPT="$(find "$HOME/.codex/plugins/cache" "$HOME/.agents/skills" "$HOME/.claude/skills" \
+  -path '*/creative-director/scripts/setup.sh' -type f 2>/dev/null | head -n 1)"
+bash "$SETUP_SCRIPT"
+```
+
+The setup is idempotent, so it is safe to run again.
+
 ## Update
 
 ```bash
