@@ -17,6 +17,12 @@ jobs:
         run: |
           jq empty .claude-plugin/manifest.json
           jq -e '.name and .version and .skills and .mcpServers' .claude-plugin/manifest.json > /dev/null
+          jq empty plugins/createya-mcp/.codex-plugin/plugin.json
+          jq -e '.name and .version and .skills and .mcpServers and .interface.logo' plugins/createya-mcp/.codex-plugin/plugin.json > /dev/null
+          jq empty plugins/createya-mcp/.mcp.json
+          jq -e '.mcpServers.createya.url' plugins/createya-mcp/.mcp.json > /dev/null
+          jq empty .agents/plugins/marketplace.json
+          jq -e '.plugins[] | select(.name == "createya-mcp" and .source.path == "./plugins/createya-mcp")' .agents/plugins/marketplace.json > /dev/null
 
       - name: Validate MCP server.json
         run: |
@@ -42,11 +48,17 @@ jobs:
           additional_files: install.sh
           severity: warning
 
+      - name: ShellCheck on helper scripts
+        uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: ./scripts
+          severity: warning
+
       - name: Verify no API keys committed
         run: |
-          # Fail if any file contains real-looking crya_sk_live_ keys
-          if grep -rE 'crya_sk_(live|test)_[a-f0-9]{32}' \
-             --include='*.md' --include='*.json' --include='*.sh' \
+          # Fail if any file contains real-looking Createya API keys.
+          if grep -rE 'crya_sk_[a-f0-9]{32}' \
+             --include='*.md' --include='*.json' --include='*.toml' --include='*.sh' \
              . 2>/dev/null; then
             echo "::error::Found possible API key — keys must NEVER be committed"
             exit 1
@@ -61,6 +73,9 @@ jobs:
               exit 1
             fi
           done
+
+      - name: Verify Codex plugin package is synced
+        run: scripts/sync-codex-plugin.sh --check
 
   markdown:
     name: Markdown lint

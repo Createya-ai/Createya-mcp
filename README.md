@@ -181,11 +181,40 @@ claude mcp add createya "https://api.createya.ai/mcp" \
 }
 ```
 
-### F. Codex / OpenCode
+### F. OpenAI Codex
 
-См. [`configs/codex.toml`](configs/codex.toml) и [`configs/opencode.json`](configs/opencode.json) — готовые шаблоны.
+**MCP напрямую** — добавь шаблон из [`configs/codex.toml`](configs/codex.toml) в `~/.codex/config.toml`:
 
-### G. Любой другой MCP-клиент
+```toml
+[mcp_servers.createya]
+url = "https://api.createya.ai/mcp"
+http_headers = { Authorization = "Bearer crya_sk_..." }
+enabled = true
+```
+
+**Codex plugin** — плагин лежит в [`plugins/createya-mcp/`](plugins/createya-mcp/). Он добавляет карточку Createya в Codex Plugins UI, логотип, MCP-сервер и все Createya skills из репозитория.
+
+`skills/` в корне — source of truth. После редактирования skills или assets обнови пакет плагина:
+
+```bash
+scripts/sync-codex-plugin.sh
+```
+
+CI проверяет, что `plugins/createya-mcp/skills/` и `plugins/createya-mcp/assets/` не разъехались с корнем.
+
+Локальная проверка из клона репозитория:
+
+```bash
+codex plugin marketplace add /path/to/createya-mcp
+```
+
+После этого открой Codex → Plugins, найди **Createya**, установи плагин и пройди авторизацию.
+
+### G. OpenCode
+
+См. [`configs/opencode.json`](configs/opencode.json) — готовый шаблон.
+
+### H. Любой другой MCP-клиент
 
 Готовые конфиги — в папке [`configs/`](configs/). Скопируй нужный, замени `crya_sk_...` на свой ключ — готово.
 

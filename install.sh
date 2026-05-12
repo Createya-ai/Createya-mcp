@@ -105,12 +105,44 @@ install_skill() {
   cp -R "${TEMP_DIR}/createya-mcp/skills/${skill}" "${target}/"
 }
 
+register_codex_mcp() {
+  local config_dir="${HOME}/.codex"
+  local config_file="${config_dir}/config.toml"
+  local tmp_file
+
+  mkdir -p "${config_dir}"
+  touch "${config_file}"
+  tmp_file="$(mktemp)"
+
+  # Replace any previous Createya config, including the old nested
+  # [mcp_servers.createya.headers] format that newer Codex builds ignore.
+  awk '
+    /^\[mcp_servers\.createya(\.|])/{skip=1; next}
+    /^\[/{skip=0}
+    !skip{print}
+  ' "${config_file}" > "${tmp_file}"
+
+  {
+    cat "${tmp_file}"
+    printf '\n[mcp_servers.createya]\n'
+    printf 'url = "%s"\n' "${MCP_URL}"
+    if [[ -n "${API_KEY}" ]]; then
+      printf 'http_headers = { Authorization = "Bearer %s" }\n' "${API_KEY}"
+    fi
+    printf 'enabled = true\n'
+  } > "${config_file}"
+
+  chmod 600 "${config_file}" 2>/dev/null || true
+  rm -f "${tmp_file}"
+}
+
 INSTALLED=()
 MCP_REGISTERED=false
 
 # ── Detect agents ────────────────────────────────────────────────────────────
 HAS_CLAUDE=false
 HAS_AGENTS=false           # any tool that reads ~/.agents/skills/ (Codex, Cursor, OpenClaw, opencode per agentskills.io)
+HAS_CODEX=false
 HAS_CURSOR_LEGACY=false    # Cursor 2.x also reads ~/.cursor/skills/
 HAS_OPENCLAW_LEGACY=false  # some OpenClaw builds expect ~/.openclaw/skills/
 
@@ -130,6 +162,9 @@ fi
 
 [[ -d "${HOME}/.cursor" ]]   && HAS_CURSOR_LEGACY=true
 [[ -d "${HOME}/.openclaw" ]] && HAS_OPENCLAW_LEGACY=true
+if [[ -d "${HOME}/.codex" ]] || command -v codex >/dev/null 2>&1; then
+  HAS_CODEX=true
+fi
 
 # ── Claude Code ──────────────────────────────────────────────────────────────
 if [[ "${HAS_CLAUDE}" == true ]]; then
@@ -170,9 +205,14 @@ if [[ "${HAS_AGENTS}" == true ]]; then
   INSTALLED+=("Codex/Cursor/OpenClaw/opencode: ~/.agents/skills/{$(IFS=,; echo "${SKILLS[*]}")}")
 
   # Drop AGENTS.md at user level for Codex CLI (top-of-context file).
-  if [[ -d "${HOME}/.codex" ]] || command -v codex >/dev/null 2>&1; then
+  if [[ "${HAS_CODEX}" == true ]]; then
+    mkdir -p "${HOME}/.codex"
     cp "${TEMP_DIR}/createya-mcp/AGENTS.md" "${HOME}/.codex/AGENTS.md" 2>/dev/null \
       || cp "${TEMP_DIR}/createya-mcp/AGENTS.md" "${HOME}/.agents/AGENTS.md" 2>/dev/null || true
+    echo "→ Codex detected — registering MCP in ~/.codex/config.toml"
+    register_codex_mcp
+    MCP_REGISTERED=true
+    INSTALLED+=("Codex MCP: createya → ${MCP_URL}")
   fi
 fi
 
@@ -251,7 +291,7 @@ if [[ "${MCP_REGISTERED}" == false ]] && [[ "${HAS_CLAUDE}" == true ]]; then
   echo ""
   if [[ -n "${API_KEY}" ]]; then
     echo "  claude mcp add createya ${MCP_URL} \\"
-    echo "    --transport http --header \"Authorization: Bearer ${API_KEY}\" --scope user"
+    echo "    --transport http --header \"Authorization: Bearer crya_sk_...\" --scope user"
   else
     echo "  claude mcp add createya ${MCP_URL} \\"
     echo "    --transport http --header \"Authorization: Bearer crya_sk_...\" --scope user"

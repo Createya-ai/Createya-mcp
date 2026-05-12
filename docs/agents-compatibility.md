@@ -14,7 +14,7 @@
 | **Cline** | ✅ | ❌ | ❌ | ❌ | см. ниже |
 | **Windsurf** | ✅ | ❌ | ❌ | ❌ | см. ниже |
 | **Continue.dev** | ✅ | ❌ | ❌ | ❌ | см. ниже |
-| **OpenAI Codex CLI** | ❌ | ❌ | ❌ | ❌ | AGENTS.md fallback |
+| **OpenAI Codex** | ✅ | ✅ (через plugin / `~/.agents/skills`) | ✅ (локальные файлы) | ✅ (если модель Codex видит вложение) | см. ниже |
 | **Gemini CLI** | ✅ | ❌ | ❌ | ❌ | GEMINI.md fallback |
 
 **Легенда:** ✅ = поддерживается нативно, ⚠️ = частично/обходной путь, ❌ = не поддерживается
@@ -22,7 +22,7 @@
 ## Установка MCP (одна команда для всех)
 
 ```bash
-curl -fsSL https://api.createya.ai/install-mcp | bash -s -- crya_sk_ваш_ключ
+curl -fsSL https://api.createya.ai/install | bash -s -- crya_sk_ваш_ключ
 ```
 
 Скрипт автоматически определит установленные агенты и пропишет MCP config.
@@ -220,17 +220,39 @@ npm install -g @google-labs/gemini-cli
 
 ---
 
-## OpenAI Codex CLI
+## OpenAI Codex
 
-MCP не поддерживается. SKILL.md не поддерживается. Используй AGENTS.md:
+Codex поддерживает два режима:
 
-```bash
-mkdir -p ~/.codex
-curl -fsSL https://raw.githubusercontent.com/Createya-ai/createya-mcp/main/AGENTS.md \
-  -o ~/.codex/AGENTS.md
+1. **MCP напрямую** — настрой `~/.codex/config.toml`.
+2. **Codex plugin** — карточка в Plugins UI с логотипом, MCP и skills.
+
+### MCP напрямую
+
+Добавить в `~/.codex/config.toml`:
+
+```toml
+[mcp_servers.createya]
+url = "https://api.createya.ai/mcp"
+http_headers = { Authorization = "Bearer crya_sk_..." }
+enabled = true
 ```
 
-AGENTS.md содержит copy-paste промпты для всех сценариев (фотосессия, UGC, видео, character sheet).
+### Codex plugin
+
+Пакет плагина находится в `plugins/createya-mcp/` и включает:
+
+- `.codex-plugin/plugin.json` — название, логотип, карточка в UI
+- `.mcp.json` — MCP endpoint `https://api.createya.ai/mcp`
+- `skills/` — `createya`, `creative-director`, `createya-batch`, `character-sheet`
+
+Локальная проверка:
+
+```bash
+codex plugin marketplace add /path/to/createya-mcp
+```
+
+Затем открыть Codex → Plugins → Createya → Install/Auth.
 
 ---
 

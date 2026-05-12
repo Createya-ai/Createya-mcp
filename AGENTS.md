@@ -7,6 +7,10 @@
   - `createya` — base MCP integration (model catalogue, run, balance)
   - `creative-director` — AI creative director for photo shoots, lookbooks, UGC, editorial series
   - `character-sheet` — generate persistent character reference sheets via GPT Image 2 (6 close-ups + tall full-body), saved into `createya/characters/<slug>/` for reuse across photo and video generations
+- **Codex plugin** in `plugins/createya-mcp/`:
+  - `.codex-plugin/plugin.json` — Codex Plugins UI metadata (name, logo, starter prompts)
+  - `.mcp.json` — Createya MCP endpoint for Codex plugin install/auth flows
+  - `skills/` and `assets/` — generated copies synced from repo root
 - **Local workspace** is created per-project in `<cwd>/createya/` (assets, sessions, characters) — never on Desktop or in `~`. Run `~/.claude/skills/creative-director/scripts/setup.sh` once inside the project root to scaffold it.
 
 ---
@@ -31,7 +35,7 @@ This single command:
 | Agent | MCP registered | Skills target |
 |---|---|---|
 | Claude Code | ✅ `claude mcp add` | `~/.claude/skills/<skill>/` |
-| OpenAI Codex CLI | — | `~/.agents/skills/<skill>/` (+ `~/.codex/AGENTS.md`) |
+| OpenAI Codex CLI | ✅ `~/.codex/config.toml` | `~/.agents/skills/<skill>/` (+ `~/.codex/AGENTS.md`) |
 | Cursor (2.x+) | — | `~/.agents/skills/<skill>/` (+ legacy `~/.cursor/skills/`) |
 | OpenClaw | — | `~/.agents/skills/<skill>/` (+ legacy `~/.openclaw/skills/`) |
 | opencode | — | uses `~/.claude/skills/` directly (no separate target) |
@@ -104,7 +108,17 @@ skills/
       prompting/                     ← Prompt formulas by scenario
     presets/                         ← Lighting, color, camera, pose, style presets
     scripts/                         ← Bash utilities (upload, download, workspace setup)
+plugins/createya-mcp/                ← Codex plugin package
+scripts/sync-codex-plugin.sh         ← Sync root skills/assets into Codex plugin package
 ```
+
+`skills/` and `assets/` at repo root are the source of truth. After editing them, run:
+
+```bash
+scripts/sync-codex-plugin.sh
+```
+
+CI runs `scripts/sync-codex-plugin.sh --check` to prevent stale plugin copies.
 
 ---
 
