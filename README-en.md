@@ -183,7 +183,7 @@ http_headers = { Authorization = "Bearer crya_sk_..." }
 enabled = true
 ```
 
-**Codex plugin** — the plugin package lives in [`plugins/createya-mcp/`](plugins/createya-mcp/). It adds a Createya card to the Codex Plugins UI with logo, MCP server, and bundled skills.
+**Codex plugin** — the plugin package lives in [`plugins/createya-mcp/`](plugins/createya-mcp/). It adds a Createya card to the Codex Plugins UI with logo, MCP server, and bundled skills. Full guide: [`docs/codex-plugin.md`](docs/codex-plugin.md).
 
 Root `skills/` and `assets/` are the source of truth. After editing them, sync the plugin package:
 
@@ -191,10 +191,16 @@ Root `skills/` and `assets/` are the source of truth. After editing them, sync t
 scripts/sync-codex-plugin.sh
 ```
 
+Public install after merge:
+
+```bash
+codex plugin marketplace add Createya-ai/Createya-mcp
+```
+
 Local test from a repository clone:
 
 ```bash
-codex plugin marketplace add /path/to/createya-mcp
+codex plugin marketplace add /path/to/Createya-mcp
 ```
 
 Then open Codex → Plugins, find **Createya**, install it, and complete auth.

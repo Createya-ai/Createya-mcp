@@ -192,7 +192,7 @@ http_headers = { Authorization = "Bearer crya_sk_..." }
 enabled = true
 ```
 
-**Codex plugin** — плагин лежит в [`plugins/createya-mcp/`](plugins/createya-mcp/). Он добавляет карточку Createya в Codex Plugins UI, логотип, MCP-сервер и все Createya skills из репозитория.
+**Codex plugin** — плагин лежит в [`plugins/createya-mcp/`](plugins/createya-mcp/). Он добавляет карточку Createya в Codex Plugins UI, логотип, MCP-сервер и все Createya skills из репозитория. Подробная инструкция: [`docs/codex-plugin.md`](docs/codex-plugin.md).
 
 `skills/` в корне — source of truth. После редактирования skills или assets обнови пакет плагина:
 
@@ -202,10 +202,16 @@ scripts/sync-codex-plugin.sh
 
 CI проверяет, что `plugins/createya-mcp/skills/` и `plugins/createya-mcp/assets/` не разъехались с корнем.
 
+Публичная установка после merge:
+
+```bash
+codex plugin marketplace add Createya-ai/Createya-mcp
+```
+
 Локальная проверка из клона репозитория:
 
 ```bash
-codex plugin marketplace add /path/to/createya-mcp
+codex plugin marketplace add /path/to/Createya-mcp
 ```
 
 После этого открой Codex → Plugins, найди **Createya**, установи плагин и пройди авторизацию.
