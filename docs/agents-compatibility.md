@@ -268,9 +268,31 @@ codex plugin marketplace add /path/to/Createya-mcp
 
 После установки пройти Createya Auth.
 
+### Creative Director workspace в Codex
+
+Codex plugin устанавливает MCP и skills, но Codex не запускает shell-скрипты в проекте в момент установки плагина. Поэтому `creative-director` делает bootstrap при первом запуске в конкретном проекте:
+
+1. Проверяет `createya/.assets-path`.
+2. Если workspace отсутствует — находит bundled `creative-director/scripts/setup.sh`.
+3. Запускает setup в текущем project root.
+
+Создаются:
+
+```text
+createya/assets/models
+createya/assets/products
+createya/assets/locations
+createya/assets/aesthetics
+createya/assets/brand
+createya/characters
+createya/sessions
+logs/createya-api.jsonl
+MASTER_CONTEXT.md
+```
+
 ---
 
-## Что НЕТ без Claude Code skill
+## Что НЕТ без Creative Director skill
 
 | Функция | Статус без skill |
 |---------|-----------------|

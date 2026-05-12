@@ -185,6 +185,8 @@ enabled = true
 
 **Codex plugin** — the plugin package lives in [`plugins/createya-mcp/`](plugins/createya-mcp/). It adds a Createya card to the Codex Plugins UI with logo, MCP server, and bundled skills. Full guide: [`docs/codex-plugin.md`](docs/codex-plugin.md).
 
+Creative Director folders (`createya/assets/models`, `products`, `locations`, `aesthetics`, `brand`) are created automatically per project on the first skill run. Codex installs the plugin and authorization, but does not run project-local shell scripts at plugin install time, so the skill handles this bootstrap itself.
+
 Root `skills/` and `assets/` are the source of truth. After editing them, sync the plugin package:
 
 ```bash
