@@ -1,0 +1,20 @@
+{
+  "name": "createya-ai",
+  "interface": {
+    "displayName": "Createya AI"
+  },
+  "plugins": [
+    {
+      "name": "createya-mcp",
+      "source": {
+        "source": "local",
+        "path": "./plugins/createya-mcp"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Design"
+    }
+  ]
+}

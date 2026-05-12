@@ -172,11 +172,38 @@ In `settings.json`:
 }
 ```
 
-### F. Codex / OpenCode
+### F. OpenAI Codex
 
-See [`configs/codex.toml`](configs/codex.toml) and [`configs/opencode.json`](configs/opencode.json) — ready-made templates.
+**Direct MCP** — add the template from [`configs/codex.toml`](configs/codex.toml) to `~/.codex/config.toml`:
 
-### G. Any other MCP client
+```toml
+[mcp_servers.createya]
+url = "https://api.createya.ai/mcp"
+http_headers = { Authorization = "Bearer crya_sk_..." }
+enabled = true
+```
+
+**Codex plugin** — the plugin package lives in [`plugins/createya-mcp/`](plugins/createya-mcp/). It adds a Createya card to the Codex Plugins UI with logo, MCP server, and bundled skills.
+
+Root `skills/` and `assets/` are the source of truth. After editing them, sync the plugin package:
+
+```bash
+scripts/sync-codex-plugin.sh
+```
+
+Local test from a repository clone:
+
+```bash
+codex plugin marketplace add /path/to/createya-mcp
+```
+
+Then open Codex → Plugins, find **Createya**, install it, and complete auth.
+
+### G. OpenCode
+
+See [`configs/opencode.json`](configs/opencode.json) — ready-made template.
+
+### H. Any other MCP client
 
 Ready-made configs in [`configs/`](configs/). Copy the relevant one, replace `crya_sk_...` with your key — done.
 

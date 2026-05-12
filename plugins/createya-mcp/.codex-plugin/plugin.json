@@ -1,0 +1,51 @@
+{
+  "name": "createya-mcp",
+  "version": "1.1.0",
+  "description": "Create images and videos through Createya's MCP server with bundled creative workflow skills.",
+  "author": {
+    "name": "Createya",
+    "email": "support@createya.ai",
+    "url": "https://createya.ai"
+  },
+  "homepage": "https://createya.ai",
+  "repository": "https://github.com/Createya-ai/createya-mcp",
+  "license": "MIT",
+  "keywords": [
+    "mcp",
+    "image-generation",
+    "video-generation",
+    "creative-director",
+    "createya",
+    "flux",
+    "kling",
+    "sora",
+    "veo",
+    "midjourney"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Createya",
+    "shortDescription": "AI image and video generation",
+    "longDescription": "Connect Codex to Createya for AI image and video generation through one MCP server. Includes Createya model-catalog workflows and a Creative Director skill for product shoots, UGC, lookbooks, character sheets, and visual campaign planning.",
+    "developerName": "Createya",
+    "category": "Design",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://createya.ai",
+    "privacyPolicyURL": "https://createya.ai/privacy",
+    "termsOfServiceURL": "https://createya.ai/terms",
+    "defaultPrompt": [
+      "Use Createya to generate an image from this brief",
+      "Use Creative Director to plan a product shoot",
+      "Use Createya to check available models"
+    ],
+    "brandColor": "#7C3AED",
+    "composerIcon": "./assets/favicon.svg",
+    "logo": "./assets/logo.png",
+    "screenshots": []
+  }
+}

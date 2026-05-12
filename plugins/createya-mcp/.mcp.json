@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "createya": {
+      "type": "http",
+      "url": "https://api.createya.ai/mcp",
+      "oauth_resource": "https://api.createya.ai/mcp",
+      "scopes": ["generate", "read:usage"],
+      "startup_timeout_sec": 20,
+      "tool_timeout_sec": 180,
+      "note": "Createya MCP server. Uses OAuth in Codex plugin flows when available; bearer-token auth can also be configured manually in ~/.codex/config.toml."
+    }
+  }
+}
