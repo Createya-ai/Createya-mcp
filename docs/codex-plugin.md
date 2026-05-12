@@ -2,7 +2,21 @@
 
 Createya can be installed in Codex as a plugin marketplace. The plugin package is stored in this repository at `plugins/createya-mcp/`.
 
-## Install for users
+## Install in Codex Desktop
+
+1. Open Codex → Plugins → Add marketplace.
+2. In **Source**, paste:
+
+   ```text
+   Createya-ai/Createya-mcp
+   ```
+
+3. Leave **Git ref** unchanged.
+4. Leave **Selective paths** empty.
+5. Click **Add marketplace**.
+6. Find **Createya**, click **Install**, and complete authorization.
+
+## Install from terminal
 
 ```bash
 codex plugin marketplace add Createya-ai/Createya-mcp

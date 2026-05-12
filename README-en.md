@@ -191,7 +191,15 @@ Root `skills/` and `assets/` are the source of truth. After editing them, sync t
 scripts/sync-codex-plugin.sh
 ```
 
-Public install after merge:
+Codex Desktop:
+
+1. Open Codex → Plugins → Add marketplace.
+2. In **Source**, paste `Createya-ai/Createya-mcp`.
+3. Leave **Git ref** unchanged.
+4. Leave **Selective paths** empty.
+5. Click **Add marketplace**, find **Createya**, and install the plugin.
+
+Terminal:
 
 ```bash
 codex plugin marketplace add Createya-ai/Createya-mcp
@@ -203,7 +211,7 @@ Local test from a repository clone:
 codex plugin marketplace add /path/to/Createya-mcp
 ```
 
-Then open Codex → Plugins, find **Createya**, install it, and complete auth.
+After install, complete Createya authorization.
 
 ### G. OpenCode
 
