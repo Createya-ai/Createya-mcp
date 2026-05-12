@@ -202,7 +202,15 @@ scripts/sync-codex-plugin.sh
 
 CI проверяет, что `plugins/createya-mcp/skills/` и `plugins/createya-mcp/assets/` не разъехались с корнем.
 
-Публичная установка после merge:
+Codex Desktop:
+
+1. Открой Codex → Plugins → Add marketplace.
+2. В поле **Источник** вставь `Createya-ai/Createya-mcp`.
+3. **Git ref** не меняй.
+4. **Выборочные пути** оставь пустым.
+5. Нажми **Add marketplace**, найди **Createya** и установи плагин.
+
+Через терминал:
 
 ```bash
 codex plugin marketplace add Createya-ai/Createya-mcp
@@ -214,7 +222,7 @@ codex plugin marketplace add Createya-ai/Createya-mcp
 codex plugin marketplace add /path/to/Createya-mcp
 ```
 
-После этого открой Codex → Plugins, найди **Createya**, установи плагин и пройди авторизацию.
+После установки пройди авторизацию Createya.
 
 ### G. OpenCode
 

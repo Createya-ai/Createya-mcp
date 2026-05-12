@@ -246,7 +246,15 @@ enabled = true
 - `.mcp.json` — MCP endpoint `https://api.createya.ai/mcp`
 - `skills/` — `createya`, `creative-director`, `createya-batch`, `character-sheet`
 
-Публичная установка после merge:
+Codex Desktop:
+
+1. Открой Codex → Plugins → Add marketplace.
+2. В поле **Источник** вставь `Createya-ai/Createya-mcp`.
+3. **Git ref** не меняй.
+4. **Выборочные пути** оставь пустым.
+5. Нажми **Add marketplace**, затем установи **Createya**.
+
+Через терминал:
 
 ```bash
 codex plugin marketplace add Createya-ai/Createya-mcp
@@ -258,7 +266,7 @@ codex plugin marketplace add Createya-ai/Createya-mcp
 codex plugin marketplace add /path/to/Createya-mcp
 ```
 
-Затем открыть Codex → Plugins → Createya → Install/Auth.
+После установки пройти Createya Auth.
 
 ---
 
