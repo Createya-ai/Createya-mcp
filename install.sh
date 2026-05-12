@@ -212,6 +212,40 @@ for line in "${INSTALLED[@]}"; do
 done
 echo ""
 
+# ── Bootstrap project workspace (creative/ folders) ──────────────────────────
+# The createya-batch and creative-director skills expect a project-local
+# `creative/` workspace for refs / etalons / output. Create the layout on first
+# install so agents have somewhere to place generated assets without guessing.
+# Idempotent — only creates missing dirs, never touches existing content.
+if [[ -w "$(pwd)" ]]; then
+  CREATIVE_DIRS=("creative" "creative/refs" "creative/etalon" "creative/output")
+  CREATED_ANY=false
+  for d in "${CREATIVE_DIRS[@]}"; do
+    if [[ ! -d "$d" ]]; then
+      mkdir -p "$d" 2>/dev/null && CREATED_ANY=true
+    fi
+  done
+  if [[ "${CREATED_ANY}" == true ]]; then
+    # Drop a tiny README so the convention is discoverable and the folders
+    # aren't an opaque mystery in the user's repo.
+    if [[ ! -f "creative/README.md" ]]; then
+      cat > creative/README.md <<'MDEOF'
+# creative/ — Createya workspace
+
+Standard layout used by the `createya-batch` and `creative-director` skills.
+
+- `refs/`   — drop reference / source images here (skills read these as inputs)
+- `etalon/` — locked "perfect" frames for consistency across variations
+- `output/` — generated results, one folder per task (`YYYY-MM-DD-<task>/`)
+  - each task folder has a `manifest.json` recording prompts, models, credits, run IDs
+MDEOF
+    fi
+    echo "✓ Bootstrapped project workspace:"
+    echo "   creative/{refs,etalon,output}/"
+    echo ""
+  fi
+fi
+
 if [[ "${MCP_REGISTERED}" == false ]] && [[ "${HAS_CLAUDE}" == true ]]; then
   echo "  To register the MCP server in Claude Code manually:"
   echo ""
