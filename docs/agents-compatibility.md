@@ -246,10 +246,16 @@ enabled = true
 - `.mcp.json` — MCP endpoint `https://api.createya.ai/mcp`
 - `skills/` — `createya`, `creative-director`, `createya-batch`, `character-sheet`
 
-Локальная проверка:
+Публичная установка после merge:
 
 ```bash
-codex plugin marketplace add /path/to/createya-mcp
+codex plugin marketplace add Createya-ai/Createya-mcp
+```
+
+Локальная проверка из клона:
+
+```bash
+codex plugin marketplace add /path/to/Createya-mcp
 ```
 
 Затем открыть Codex → Plugins → Createya → Install/Auth.
